@@ -1,0 +1,134 @@
+package Integración.Compra;
+
+import Negocio.Compra.TCompra;
+import Negocio.Transaction.Transaction;
+import Negocio.Transaction.TransactionManager;
+
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
+
+import Integración.DataSource.DataSourceSingleton;
+
+public class DAOCompraImp implements DAOCompra {
+
+	public int cerrarCompra(TCompra compra) {
+		TransactionManager tManager = TransactionManager.getInstance();
+		int exito = -1;
+		try {
+			Transaction t = tManager.getTransaccion();
+			Connection c = (Connection) t.getResource();
+			Statement s = c.createStatement();
+			exito = s.executeUpdate("INSERT INTO COMPRA (FECHA,PRECIO_TOTAL,ID_SOCIO,ID_TRABAJADOR,ACTIVO) VALUES ('"+ compra.getFecha().toString() + "', "+compra.getPrecioTotal()+
+					", "+ compra.getIdCliente() + ", " + compra.getIdTrabajador() + ", '1');", Statement.RETURN_GENERATED_KEYS);
+			
+			ResultSet idInsertado = s.getGeneratedKeys();
+			if (idInsertado.next()) {
+				exito = idInsertado.getInt(1);
+			}
+			
+			
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		
+		return exito;
+}
+
+	public int realizarDevolucion(TCompra compra) {
+		int exito = -1;
+		try {
+			Transaction t = TransactionManager.getInstance().getTransaccion();
+			Connection c = (Connection) t.getResource();
+			Statement s = c.createStatement();
+			exito = s.executeUpdate("UPDATE COMPRA SET PRECIO_TOTAL = "+ compra.getPrecioTotal() +" WHERE ID_COMPRA = " + compra.getIDCompra()+";");
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return exito;
+	}
+
+	
+	public TCompra buscarCompra(int id_Compra) {
+		TCompra compra = null;
+		try {
+			Transaction t = null;
+			Connection c;
+			try {
+				t = TransactionManager.getInstance().getTransaccion();
+				c = (Connection) t.getResource();
+
+			} catch (Exception e) {
+				c = DataSourceSingleton.getInstancia().getNewConnection();
+			}
+			
+			Statement s = c.createStatement();
+			ResultSet r = s.executeQuery("SELECT * FROM COMPRA WHERE ID_COMPRA = " + id_Compra + ";");
+			while (r.next()) {
+				compra = new TCompra();
+				compra.setID_Compra(r.getInt("ID_COMPRA"));
+				String fecha = r.getString("FECHA");
+				LocalDate date = null;
+				date = date.parse(fecha);
+				compra.setFecha(date);
+				compra.setPrecioTotal(r.getFloat("PRECIO_TOTAL"));
+				compra.setIdCliente(r.getInt("ID_SOCIO"));
+				compra.setIdTrabajador(r.getInt("ID_TRABAJADOR"));
+				compra.setActivo(r.getBoolean("ACTIVO"));
+			}
+			
+			if(t == null){
+				c.close();
+			}
+		
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return compra;
+	}
+
+	public List<TCompra> buscarTodasCompras() {
+		List<TCompra> compras = null;
+		ResultSet resultSet;
+		Connection connection = null;
+
+		try {
+			Transaction t = null;
+			
+			try {
+				t = TransactionManager.getInstance().getTransaccion();
+				connection = (Connection) t.getResource();
+			} catch (Exception e) {
+				connection = DataSourceSingleton.getInstancia().getNewConnection();
+			}
+			Statement s = connection.createStatement();
+
+			resultSet = s.executeQuery("SELECT * FROM COMPRA WHERE ACTIVO = 1;");
+			compras = new ArrayList<TCompra>();
+
+			while (resultSet.next()) {
+				TCompra compra = new TCompra();
+				compra.setID_Compra(resultSet.getInt("ID_COMPRA"));
+				String fecha = resultSet.getString("FECHA");
+				LocalDate date = null;
+				date = date.parse(fecha);
+				compra.setFecha(date);
+				compra.setPrecioTotal(resultSet.getFloat("PRECIO_TOTAL"));
+				compra.setIdCliente(resultSet.getInt("ID_SOCIO"));
+				compra.setIdTrabajador(resultSet.getInt("ID_TRABAJADOR"));
+				compra.setActivo(resultSet.getBoolean("ACTIVO"));
+				
+				compras.add(compra);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return compras;
+	}
+
+}
