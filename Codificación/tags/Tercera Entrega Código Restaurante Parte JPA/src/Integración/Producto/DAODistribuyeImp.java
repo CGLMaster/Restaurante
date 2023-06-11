@@ -1,0 +1,136 @@
+package Integración.Producto;
+
+import Negocio.Producto.TDistribuye;
+import Negocio.Transaction.Transaction;
+import Negocio.Transaction.TransactionManager;
+
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
+
+import Integración.DataSource.DataSourceSingleton;
+
+public class DAODistribuyeImp implements DAODistribuye {
+
+	public int vincularProductoProveedor(TDistribuye distribuye) {
+		int exito = -1;
+
+		try {
+			Transaction t = TransactionManager.getInstance().getTransaccion();
+			Connection c = (Connection) t.getResource();
+			Statement s = c.createStatement();
+			exito = s.executeUpdate("INSERT INTO DISTRIBUYE " + "(ID_PRODUCTO, ID_PROVEEDOR) VALUES ("
+					+ distribuye.getIdProducto() + ", " + distribuye.getIdProveedor() + ");");
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			exito = -1;
+		}
+		return exito;
+	}
+
+	public int desvincularProductoProveedor(TDistribuye distribuye) {
+		int exito = -1;
+
+		try {
+			Transaction t = TransactionManager.getInstance().getTransaccion();
+			Connection c = (Connection) t.getResource();
+			Statement s = c.createStatement();
+			exito = s.executeUpdate("DELETE FROM DISTRIBUYE WHERE ID_PRODUCTO = " + distribuye.getIdProducto()
+					+ " AND ID_PROVEEDOR = " + distribuye.getIdProveedor() + " ;");
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			exito = -1;
+		}
+		return exito;
+	}
+
+	public List<TDistribuye> buscarTodosVinculosProducto(int id_producto) {
+		List<TDistribuye> res = new ArrayList();
+		try {
+			Transaction t = null;
+			Connection c = null;
+			try {
+				t = TransactionManager.getInstance().getTransaccion();
+				c = (Connection) t.getResource();
+
+			} catch (Exception e) {
+				c = DataSourceSingleton.getInstancia().getNewConnection();
+			}
+			Statement s = c.createStatement();
+			ResultSet r = s.executeQuery("SELECT * FROM DISTRIBUYE WHERE ID_PRODUCTO = " + id_producto + ";");
+
+			TDistribuye aux;
+
+			while (r.next()) {
+				aux = new TDistribuye(r.getInt("ID_PRODUCTO"), r.getInt("ID_PROVEEDOR"));
+				res.add(aux);
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return res;
+	}
+
+	public List<TDistribuye> buscarTodosVinculosProveedor(int id_proveedor) {
+		List<TDistribuye> res = new ArrayList();
+		try {
+			Transaction t = null;
+			Connection c = null;
+			try {
+				t = TransactionManager.getInstance().getTransaccion();
+				c = (Connection) t.getResource();
+
+			} catch (Exception e) {
+				c = DataSourceSingleton.getInstancia().getNewConnection();
+			}
+			Statement s = c.createStatement();
+			ResultSet r = s.executeQuery("SELECT * FROM DISTRIBUYE WHERE ID_PROVEEDOR = " + id_proveedor + ";");
+
+			TDistribuye aux;
+
+			while (r.next()) {
+				aux = new TDistribuye(r.getInt("ID_PRODUCTO"), r.getInt("ID_PROVEEDOR"));
+				res.add(aux);
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return res;
+	}
+
+	public TDistribuye buscarVinculoProducto(int id_producto, int id_proveedor) {
+		TDistribuye res = null;
+		try {
+			Transaction t = null;
+			Connection c = null;
+			try {
+				t = TransactionManager.getInstance().getTransaccion();
+				c = (Connection) t.getResource();
+
+			} catch (Exception e) {
+				c = DataSourceSingleton.getInstancia().getNewConnection();
+			}
+			Statement s = c.createStatement();
+			ResultSet r = s.executeQuery("SELECT * FROM DISTRIBUYE WHERE ID_PRODUCTO = " + id_producto
+					+ " AND ID_PROVEEDOR = " + id_proveedor + " ;");
+
+			if (r.next()) {
+				res = new TDistribuye(r.getInt("ID_PRODUCTO"), r.getInt("ID_PROVEEDOR"));
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			res = null;
+		}
+
+		return res;
+	}
+}

@@ -1,1 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<persistence xmlns="https://jakarta.ee/xml/ns/persistence"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:schemaLocation="https://jakarta.ee/xml/ns/persistence https://jakarta.ee/xml/ns/persistence/persistence_3_0.xsd"
+             version="3.0">
+	<persistence-unit name="CodificacionSuperRest" transaction-type="RESOURCE_LOCAL">
+	<!--TODAS LAS CLASES QUE UTILIZAMOS-->
+		<class>Negocio.ClienteRest.ClienteRest</class>
+		<class>Negocio.Plato.Plato</class>
+		<class>Negocio.Plato.Bebida</class>
+		<class>Negocio.Plato.Comida</class>
+		<class>Negocio.Personal.Personal</class>
+		<class>Negocio.Personal.TiempoCompletoP</class>
+		<class>Negocio.Personal.TiempoParcialP</class>
+		<class>Negocio.Pedido.Pedido</class>
+		<class>Negocio.Pedido.LineaPedido</class>
+		<class>Negocio.Ingrediente.Ingrediente</class>
+		<class>Negocio.Turno.Turno</class>
+		<shared-cache-mode>NONE</shared-cache-mode>
+		<validation-mode>NONE</validation-mode>
 
+	<!-- properties, INCLUIMOS CONEXION, Y COMO QUEREMOS CREAR LAS TABLAS -->
+	<properties>
+		<property name="jakarta.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver"/>
+		<property name="jakarta.persistence.jdbc.url" value="jdbc:mysql://35.233.32.45:3306/BDRest"/>
+		<property name="jakarta.persistence.jdbc.user" value="IBMUser"/>
+		<property name="jakarta.persistence.jdbc.password" value="Javajavita69"/>
+		
+		<!-- enable this EclipseLink property to see SQL and other logging -->
+		<!-- property name="eclipselink.logging.level" value="FINE"/ -->
+		
+		<property name="eclipselink.ddl-generation" value="create-or-extend-tables"/>
+		<property name="eclipselink.ddl-generation.output-mode" value="database"/>
+		<property name="eclipselink.ddl-generation-mode" value="ddl_database_generation" />
+		
+	</properties>
+	</persistence-unit>
+</persistence>
