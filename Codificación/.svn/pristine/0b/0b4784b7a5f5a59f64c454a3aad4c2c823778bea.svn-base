@@ -1,0 +1,15 @@
+/**
+ * 
+ */
+package Integración.Queries;
+
+/** 
+ * <!-- begin-UML-doc -->
+ * <!-- end-UML-doc -->
+ * @author Pabluno
+ * @generated "UML a Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
+ */
+public interface Query {
+	
+	public Object Execute(Object params);
+}

@@ -1,0 +1,67 @@
+/**
+ * 
+ */
+package Negocio.Turno;
+
+import java.util.Set;
+
+/** 
+* <!-- begin-UML-doc -->
+* <!-- end-UML-doc -->
+* @author Pabluno
+* @generated "UML a JPA (com.ibm.xtools.transform.uml2.ejb3.java.jpa.internal.UML2JPATransform)"
+*/
+public interface SATurno {
+	/** 
+	* <!-- begin-UML-doc -->
+	* <!-- end-UML-doc -->
+	* @param Tuno
+	* @return
+	* @generated "UML a JPA (com.ibm.xtools.transform.uml2.ejb3.java.jpa.internal.UML2JPATransform)"
+	*/
+	public int altaTurno(TTurno Tuno);
+
+	/** 
+	* <!-- begin-UML-doc -->
+	* <!-- end-UML-doc -->
+	* @param id_turno
+	* @return
+	* @generated "UML a JPA (com.ibm.xtools.transform.uml2.ejb3.java.jpa.internal.UML2JPATransform)"
+	*/
+	public int bajaTurno(int id_turno);
+
+	/** 
+	* <!-- begin-UML-doc -->
+	* <!-- end-UML-doc -->
+	* @param turno
+	* @return
+	* @generated "UML a JPA (com.ibm.xtools.transform.uml2.ejb3.java.jpa.internal.UML2JPATransform)"
+	*/
+	public int modificarTurno(TTurno turno);
+
+	/** 
+	* <!-- begin-UML-doc -->
+	* <!-- end-UML-doc -->
+	* @param id_turno
+	* @return
+	* @generated "UML a JPA (com.ibm.xtools.transform.uml2.ejb3.java.jpa.internal.UML2JPATransform)"
+	*/
+	public TTurno buscarUnTurno(int id_turno);
+
+	/** 
+	* <!-- begin-UML-doc -->
+	* <!-- end-UML-doc -->
+	* @return
+	* @generated "UML a JPA (com.ibm.xtools.transform.uml2.ejb3.java.jpa.internal.UML2JPATransform)"
+	*/
+	public Set<TTurno> buscarTodosTurno();
+
+	/** 
+	* <!-- begin-UML-doc -->
+	* <!-- end-UML-doc -->
+	* @param id_turno
+	* @return
+	* @generated "UML a JPA (com.ibm.xtools.transform.uml2.ejb3.java.jpa.internal.UML2JPATransform)"
+	*/
+	public Double calcularNominaTurno(int id_turno);
+}

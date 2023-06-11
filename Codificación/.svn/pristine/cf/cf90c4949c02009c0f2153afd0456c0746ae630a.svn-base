@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="2.1" xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
+	<persistence-unit name="CodificacionSuperRest" transaction-type="RESOURCE_LOCAL">
+	<!-- todas las clases que utilizamos con el proveedor de JPA AÑADIR LAS ENTIDADES QUE FALTAN-->
+		<class>Negocio.ClienteRest.ClienteRest</class>
+		<class>Negocio.Plato.Plato</class>
+		<class>Negocio.Personal.Personal</class>
+		<class>Negocio.Pedido.Pedido</class>
+		<class>Negocio.Ingrediente.Ingrediente</class>
+		<class>Negocio.Turno.Turno</class>
+		<shared-cache-mode>NONE</shared-cache-mode>
+		<validation-mode>NONE</validation-mode>
+
+	<!-- properties, incluimos conexion, y como queremos crear las tablas, faltan cosas Cambiar javax por jakarta-->
+	<properties>
+		<property name="javax.persistence.jdbc.driver" value="mysql-connector-java-8.0.18.jar"/>
+		<property name="javax.persistence.jdbc.url" value="35.233.32.45:3306/BDRest"/>
+		<property name="javax.persistence.jdbc.user" value="IBMUser"/>
+		<property name="javax.persistence.jdbc.password" value="Javajavita69"/>
+		
+		<!-- enable this EclipseLink property to see SQL and other logging -->
+		<!-- property name="eclipselink.logging.level" value="FINE"/ -->
+		
+		<property name="eclipselink.ddl-generation" value="create-or-extend-tables"/>
+		<property name="eclipselink.ddl-generation.output-mode" value="both"/>
+		
+	</properties>
+	</persistence-unit>
+</persistence>

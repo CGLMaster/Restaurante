@@ -1,0 +1,26 @@
+package Presentación.Command.CompraCommands;
+
+import java.util.List;
+
+import Negocio.Compra.TLineaDeCompra;
+import Negocio.FactoriaNegocio.FactoriaSA;
+import Presentación.Command.Command;
+import Presentación.Command.Context;
+import Presentación.Controller.Eventos;
+
+public class DevolucionCompraCommand implements Command {
+
+	public Context executeCommand(Object datos) {
+		int res = FactoriaSA.getInstance().getSACompra().devolverProductos((List<TLineaDeCompra>) datos);
+		Context resContext;
+
+		if (res != -1) {
+			resContext = new Context(Eventos.RES_DEVOLUCION_PRODUCTO_OK);
+		} else {
+			resContext = null;
+			resContext = new Context(Eventos.RES_DEVOLUCION_PRODUCTO_KO);
+		}
+
+		return resContext;
+	}
+}

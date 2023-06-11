@@ -1,0 +1,29 @@
+/**
+ * 
+ */
+package Integración.FactoriaQueries;
+
+import Integración.Queries.Query;
+
+/** 
+* <!-- begin-UML-doc -->
+* <!-- end-UML-doc -->
+* @author Pabluno
+* @generated "UML a Java (com.ibm.xtools.transform.uml2.java5.internal.UML2JavaTransform)"
+*/
+public abstract class FactoriaQueries {
+	
+	private static FactoriaQueries instancia;
+
+	
+	public static FactoriaQueries getInstance() {
+		// begin-user-code
+		// TODO Auto-generated method stub
+		if(instancia == null) instancia = new FactoriaQueriesImp();
+		
+		return instancia;
+		// end-user-code
+	}
+
+	public abstract Query getNewQuery(String nombre);
+}

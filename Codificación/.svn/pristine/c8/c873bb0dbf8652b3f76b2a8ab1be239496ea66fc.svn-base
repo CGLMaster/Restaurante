@@ -1,0 +1,86 @@
+/**
+ * 
+ */
+package Negocio.Turno;
+
+import java.util.Set;
+
+/** 
+* <!-- begin-UML-doc -->
+* <!-- end-UML-doc -->
+* @author Pabluno
+* @generated "UML a JPA (com.ibm.xtools.transform.uml2.ejb3.java.jpa.internal.UML2JPATransform)"
+*/
+public class SATurnoImp implements SATurno {
+	/** 
+	* (non-Javadoc)
+	* @see SATurno#altaTurno(TTurno Tuno)
+	* @generated "UML a JPA (com.ibm.xtools.transform.uml2.ejb3.java.jpa.internal.UML2JPATransform)"
+	*/
+	public int altaTurno(TTurno Tuno) {
+		// begin-user-code
+		// TODO Auto-generated method stub
+		return 0;
+		// end-user-code
+	}
+
+	/** 
+	* (non-Javadoc)
+	* @see SATurno#bajaTurno(int id_turno)
+	* @generated "UML a JPA (com.ibm.xtools.transform.uml2.ejb3.java.jpa.internal.UML2JPATransform)"
+	*/
+	public int bajaTurno(int id_turno) {
+		// begin-user-code
+		// TODO Auto-generated method stub
+		return 0;
+		// end-user-code
+	}
+
+	/** 
+	* (non-Javadoc)
+	* @see SATurno#modificarTurno(TTurno turno)
+	* @generated "UML a JPA (com.ibm.xtools.transform.uml2.ejb3.java.jpa.internal.UML2JPATransform)"
+	*/
+	public int modificarTurno(TTurno turno) {
+		// begin-user-code
+		// TODO Auto-generated method stub
+		return 0;
+		// end-user-code
+	}
+
+	/** 
+	* (non-Javadoc)
+	* @see SATurno#buscarUnTurno(int id_turno)
+	* @generated "UML a JPA (com.ibm.xtools.transform.uml2.ejb3.java.jpa.internal.UML2JPATransform)"
+	*/
+	public TTurno buscarUnTurno(int id_turno) {
+		// begin-user-code
+		// TODO Auto-generated method stub
+		return null;
+		// end-user-code
+	}
+
+	/** 
+	* (non-Javadoc)
+	* @see SATurno#buscarTodosTurno()
+	* @generated "UML a JPA (com.ibm.xtools.transform.uml2.ejb3.java.jpa.internal.UML2JPATransform)"
+	*/
+	public Set<TTurno> buscarTodosTurno() {
+		// begin-user-code
+		// TODO Auto-generated method stub
+		return null;
+		// end-user-code
+	}
+
+	/** 
+	* (non-Javadoc)
+	* @see SATurno#calcularNominaTurno(int id_turno)
+	* @generated "UML a JPA (com.ibm.xtools.transform.uml2.ejb3.java.jpa.internal.UML2JPATransform)"
+	*/
+	public Double calcularNominaTurno(int id_turno) {
+		// begin-user-code
+		// TODO Auto-generated method stub
+		return null;
+		// end-user-code
+	}
+}

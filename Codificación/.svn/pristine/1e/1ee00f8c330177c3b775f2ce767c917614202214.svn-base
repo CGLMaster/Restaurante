@@ -1,0 +1,61 @@
+package Presentación.Trabajador;
+
+import java.util.ArrayList;
+
+import javax.swing.JFrame;
+
+import Integración.Trabajador.DAOTrabajadorImp;
+import Negocio.Trabajador.TTrabajador;
+import Negocio.Transaction.Transaction;
+import Negocio.Transaction.TransactionManager;
+import Presentación.Command.CommandFactory;
+import Presentación.Command.Context;
+import Presentación.Controller.Controller;
+import Presentación.Controller.Eventos;
+import Presentación.FactoriaVistas.IGUI;
+
+public class pruebas {
+
+	public static void main(String[] args) {
+		
+		/*Controller controller = Controller.getInstance();
+		
+		Context context = new Context(Eventos.BUSCAR_TODOS_TRABAJADOR, null);
+		
+		controller.action(context);*/
+		
+		/*TransactionManager transactionManager = TransactionManager.getInstance();
+		try {
+			Transaction transaccion = transactionManager.nuevaTransaccion();
+			transaccion.start();
+			
+			DAOTrabajadorImp dao = new DAOTrabajadorImp();
+			
+			
+			//BUSCAR TODOS TRABAJADORES
+			ArrayList<TTrabajador> trabajadores = (ArrayList<TTrabajador>) dao.buscarTodosTrabajador();
+			for(TTrabajador trabajador : trabajadores){
+				System.out.println(trabajador.getNombre());
+			}
+			 
+			JFrame jframe = new JFrame();
+					
+			IGUI currentIGUI = new VBuscarTodosTrabajador(jframe, trabajadores);
+			
+		
+			
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}*/
+		
+		TTrabajador trabajador = new TTrabajador("Alberto Rivas", "alberto@gmail.com", "12345678R");
+		
+		CommandFactory.getInstance().getCommand(Eventos.GUARDAR_TRABAJADOR).executeCommand(trabajador);
+		
+		
+		
+
+	}
+
+}

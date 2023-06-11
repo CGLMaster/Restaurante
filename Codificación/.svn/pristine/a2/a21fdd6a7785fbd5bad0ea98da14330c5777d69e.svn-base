@@ -1,0 +1,32 @@
+package Integración.Seccion;
+
+import Negocio.Seccion.TSeccion;
+
+import java.util.List;
+
+public interface DAOSeccion {
+
+	public int altaSeccion(TSeccion seccion);
+
+	public TSeccion buscarSeccion(int id);
+
+	/** 
+	* <!-- begin-UML-doc -->
+	* <!-- end-UML-doc -->
+	* @param zona
+	* @param pasillo
+	* @return
+	* @generated "UML a JPA (com.ibm.xtools.transform.uml2.ejb3.java.jpa.internal.UML2JPATransform)"
+	*/
+	public TSeccion buscarPorZonaPasillo(String zona, int pasillo);
+
+	public List<TSeccion> buscarTodosSeccion();
+
+	public int modificarSeccion(TSeccion seccion);
+
+	public int bajaSeccion(int id);
+
+	public int reactivar(int id_pasillo);
+
+	public int buscarSeccionPorZonaPasillo(String zona, int pasillo);
+}

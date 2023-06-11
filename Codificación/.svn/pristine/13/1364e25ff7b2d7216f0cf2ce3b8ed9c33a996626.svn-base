@@ -1,0 +1,41 @@
+package Presentación.Ingrediente;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import Negocio.Ingrediente.TIngrediente;
+
+public class Prueba {
+
+	public static void main(String[] args) {
+	
+		List<TIngrediente> list = new ArrayList<TIngrediente>();
+		TIngrediente ingre1 = new TIngrediente(1,"Arroz",200.00,true);
+		TIngrediente ingre2 = new TIngrediente(2,"Langostinos",200.00,true);
+		TIngrediente ingre3 = new TIngrediente(3,"Merluza",200.00,true);
+		TIngrediente ingre4 = new TIngrediente(4,"Pastilla Avecrem",200.00,true);
+		TIngrediente ingre5 = new TIngrediente(5,"Calamares",200.00,true);
+		TIngrediente ingre6 = new TIngrediente(6,"Pollo",200.00,true);
+		TIngrediente ingre7 = new TIngrediente(7,"Azafran",200.00,true);
+		TIngrediente ingre8 = new TIngrediente(8,"Aceite Virgen Extra",200.00,true);
+		TIngrediente ingre9 = new TIngrediente(9,"Sal",200.00,true);
+		TIngrediente ingre10 = new TIngrediente(10,"Mejillones",200.00,true);
+		TIngrediente ingre11 = new TIngrediente(11,"Pimiento Rojo",200.00,true);
+		TIngrediente ingre12 = new TIngrediente(12,"Pimiento Verde",200.00,true);
+		list.add(ingre1);
+		list.add(ingre2);
+		list.add(ingre3);
+		list.add(ingre4);
+		list.add(ingre5);
+		list.add(ingre6);
+		list.add(ingre7);
+		list.add(ingre8);
+		list.add(ingre9);
+		list.add(ingre10);
+		list.add(ingre11);
+		list.add(ingre12);
+		VBuscarTodosIngredientes vprincipal = new VBuscarTodosIngredientes(list);
+
+	}
+
+}

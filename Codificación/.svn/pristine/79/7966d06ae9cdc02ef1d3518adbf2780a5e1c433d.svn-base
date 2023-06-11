@@ -1,0 +1,74 @@
+package Negocio.Compra;
+
+import java.util.List;
+import Negocio.Producto.TProducto;
+
+public class TCompraConProductos {
+
+	/** 
+	* <!-- begin-UML-doc -->
+	* <!-- end-UML-doc -->
+	* @generated "UML a JPA (com.ibm.xtools.transform.uml2.ejb3.java.jpa.internal.UML2JPATransform)"
+	*/
+	private Set<TProducto> tProducto;
+	/** 
+	* <!-- begin-UML-doc -->
+	* <!-- end-UML-doc -->
+	* @generated "UML a JPA (com.ibm.xtools.transform.uml2.ejb3.java.jpa.internal.UML2JPATransform)"
+	*/
+	private TCompra tCompra;
+	/** 
+	* <!-- begin-UML-doc -->
+	* <!-- end-UML-doc -->
+	* @generated "UML a JPA (com.ibm.xtools.transform.uml2.ejb3.java.jpa.internal.UML2JPATransform)"
+	*/
+	private Set<TLineaDeCompra> tLineaDeCompra;
+
+	/** 
+	* <!-- begin-UML-doc -->
+	* <!-- end-UML-doc -->
+	* @return
+	* @generated "UML a JPA (com.ibm.xtools.transform.uml2.ejb3.java.jpa.internal.UML2JPATransform)"
+	*/
+	public Set<ArrayList> getListaProductos() {
+		// begin-user-code
+		// TODO Auto-generated method stub
+		return null;
+		// end-user-code
+	}
+
+	private List<TProducto> productos;
+	private TCompra compra;
+	private List<TLineaDeCompra> lineasDeCompra;
+
+	public TCompraConProductos(List<TProducto> productos, TCompra compra, List<TLineaDeCompra> lineasDeCompra) {
+		this.productos = productos;
+		this.compra = compra;
+		this.lineasDeCompra = lineasDeCompra;
+	}
+
+	public List<TProducto> getProductos() {
+		return productos;
+	}
+
+	public void setProductos(List<TProducto> productos) {
+		this.productos = productos;
+	}
+
+	public TCompra getCompra() {
+		return compra;
+	}
+
+	public void setCompra(TCompra compra) {
+		this.compra = compra;
+	}
+
+	public List<TLineaDeCompra> getLineasDeCompra() {
+		return lineasDeCompra;
+	}
+
+	public void setLineasDeCompra(List<TLineaDeCompra> lineasDeCompra) {
+		this.lineasDeCompra = lineasDeCompra;
+	}
+
+}

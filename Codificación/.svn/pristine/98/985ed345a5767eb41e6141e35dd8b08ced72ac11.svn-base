@@ -1,0 +1,38 @@
+package Negocio.Proveedor;
+
+import java.util.List;
+
+public class pruebas {
+
+	public static void main(String[] args) {
+		
+		
+		SAProveedorImp sa = new SAProveedorImp();
+		
+		//ALTA
+		//TProveedor proveedor = new TProveedor("Alberto");
+		//int res = sa.altaProveedor("Alberto");
+		
+		//BAJA
+		//int res = sa.eliminarProveedor(2);
+		
+		//BUSCAR
+		/*TProveedor proveedor = sa.buscarProveedor(2);
+		System.out.println(proveedor.getNombre());*/
+		
+		//BUSCAR TODOS
+		/*List<TProveedor> proveedores = sa.buscarTodosProveedor();
+		for(TProveedor proveedor : proveedores){
+			System.out.println(proveedor.getNombre());
+		}*/
+		
+		
+		//MODIFICAR
+		/*TProveedor proveedor = new TProveedor("Juan");
+		proveedor.setID(2);
+		int res = sa.modificarProveedor(proveedor);*/
+		
+
+	}
+
+}

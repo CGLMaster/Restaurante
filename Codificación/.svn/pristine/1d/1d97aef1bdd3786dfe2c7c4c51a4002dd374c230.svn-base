@@ -1,0 +1,110 @@
+package Negocio.Ingrediente;
+
+import java.util.Set;
+
+import Negocio.FactoriaEntityManager.FactoriaEntityManager;
+import Negocio.Transaction.Transaction;
+import jakarta.persistence.EntityManagerFactory;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.EntityTransaction;
+import jakarta.persistence.LockModeType;
+import jakarta.persistence.TypedQuery;
+
+public class SAIngredienteImp implements SAIngrediente {
+
+	public int aniadirIngrediente(TIngrediente ingrediente) {
+		int IDIngrediente = -1;
+		FactoriaEntityManager emf = FactoriaEntityManager.getInstance();
+		EntityManager em = emf.generarEntityManager();
+		EntityTransaction et = em.getTransaction();
+		et.begin();
+		TypedQuery<Ingrediente> q = em.createQuery("Negocio.Ingrediente.Ingrediente.findByid", Ingrediente.class);
+		q.setParameter("obj.id", ingrediente.getID());
+		Ingrediente ing = (Ingrediente) q.getSingleResult();
+
+		if (ing == null) {
+			Ingrediente i = new Ingrediente();
+			i.transferToEntity(ingrediente);
+			em.persist(i);
+			et.commit();
+			IDIngrediente = i.getId();
+		} else if (ing != null && !ing.isActivo()) {
+			ing.transferToEntity(ingrediente);
+			em.persist(ing);
+			et.commit();
+			IDIngrediente = ing.getId();
+		} else {
+			et.rollback();
+		}
+
+		em.close();
+		return IDIngrediente;
+	}
+
+	public int eliminarIngrediente(int ingrediente) {
+		int res = -1;
+
+		FactoriaEntityManager emfactory = FactoriaEntityManager.getInstance();
+		EntityManager em = emfactory.generarEntityManager();
+		EntityTransaction et = em.getTransaction();
+
+		et.begin();
+		Ingrediente ingred = em.find(Ingrediente.class, ingrediente);
+
+		if (ingred != null && ingred.isActivo() && ingred.getPlatos().size() == 0) {
+			em.lock(ingred, LockModeType.OPTIMISTIC);
+			ingred.setActivo(false);
+			em.persist(ingred);
+			et.commit();
+			res = 1;
+		} else {
+			et.rollback();
+		}
+
+		em.close();
+
+		return res;
+	}
+
+	public TIngrediente buscarIngrediente(int id) {
+		FactoriaEntityManager factoriaEntityManager = FactoriaEntityManager.getInstance();
+		EntityManager entityManager = factoriaEntityManager.generarEntityManager();
+
+		EntityTransaction transaccion = entityManager.getTransaction();
+		transaccion.begin();
+
+		Ingrediente ingrediente = entityManager.find(Ingrediente.class, id, LockModeType.OPTIMISTIC);
+
+		if (ingrediente == null) {
+			return null;
+		}
+
+		TIngrediente tIngrediente = new TIngrediente();
+
+		tIngrediente.setID(ingrediente.getId());
+		tIngrediente.setNombre(ingrediente.getNombre());
+		tIngrediente.setCalorias(ingrediente.getCalorias());
+		tIngrediente.setActivo(ingrediente.isActivo());
+
+		transaccion.commit();
+		entityManager.close();
+
+		return tIngrediente;
+	}
+
+	public Set<TIngrediente> buscarTodosIngredientes() {
+		FactoriaEntityManager factoriaEntityManager = FactoriaEntityManager.getInstance();
+
+		EntityManager entityManager = factoriaEntityManager.generarEntityManager();
+
+		EntityTransaction transaccion = entityManager.getTransaction();
+		transaccion.begin();
+
+		return null;
+	}
+
+	public int editarIngrediente(TIngrediente ingrediente) {
+
+		return 0;
+	}
+}

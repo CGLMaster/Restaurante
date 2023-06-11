@@ -1,0 +1,39 @@
+package Negocio.Trabajador;
+
+import Presentación.Command.Command;
+import Presentación.Command.CommandFactory;
+import Presentación.Command.Context;
+import Presentación.Controller.Eventos;
+
+public class pruebas {
+
+	public static void main(String[] args) {
+		
+		//SATrabajadorImp sa = new SATrabajadorImp();
+		
+		//TTrabajador trabajador = new TTrabajador("qqqq", "qqqq@gmail.com", "12345698E");
+		
+		//int res = sa.altaTrabajador(trabajador);
+		
+		
+		//int res = sa.eliminarTrabajador(12);
+		
+		
+		/*TTrabajador trabajador = new TTrabajador("Luis Andres","owo@gmail.com","11111111R");
+		trabajador.setId(5);
+		int res = sa.modificarDatosTrabajador(trabajador);*/
+		
+		//System.out.println(res);
+		
+		
+		/*Command command = CommandFactory.getInstance().getCommand(Eventos.MODIFICAR_TRABAJADOR);
+		
+		Context res = command.executeCommand(trabajador);
+		
+		System.out.println(res);*/
+		
+		
+
+	}
+
+}

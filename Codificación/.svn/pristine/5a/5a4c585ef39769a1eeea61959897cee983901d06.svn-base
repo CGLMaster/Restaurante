@@ -1,0 +1,23 @@
+package Presentación.Controller;
+
+import Presentación.Command.Command;
+import Presentación.Command.CommandFactory;
+import Presentación.Command.Context;
+import Presentación.FactoriaVistas.FactoriaVistas;
+
+public class ControllerImp extends Controller {
+	
+	public void action(Context contexto) {
+		
+		Command command = CommandFactory.getInstance().getCommand(contexto.getEvento());
+		
+		if(command == null){
+			FactoriaVistas.getInstance().generarVista(contexto);//TODO: generarVista debería recibir un evento?
+		}else{
+			Context res = command.executeCommand(contexto.getDatos());
+			if(FactoriaVistas.getInstance().generarVista(res) == null){
+				FactoriaVistas.getInstance().getCurrentView().actualizar(res);
+			}
+		}
+	}
+}

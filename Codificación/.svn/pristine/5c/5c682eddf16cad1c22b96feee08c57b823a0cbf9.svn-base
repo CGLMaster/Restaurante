@@ -1,0 +1,154 @@
+/**
+ * 
+ */
+package Integración.Compra;
+
+import Negocio.Producto.TProducto;
+import Negocio.Transaction.Transaction;
+import Negocio.Transaction.TransactionManager;
+import Negocio.Compra.TCompra;
+import Negocio.Compra.TLineaDeCompra;
+
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
+
+import Integración.DataSource.DataSourceSingleton;
+
+
+public class DAOProductoCompraImp implements DAOProductoCompra {
+	
+	public int AñadirProductoCompra(int id_Compra, int cantidadProducto, TProducto producto) {
+		try {
+			Connection c = (Connection) TransactionManager.getInstance().getTransaccion().getResource();
+			Statement s = c.createStatement();
+			int res = s.executeUpdate("INSERT INTO LINEADECOMPRA (ID_COMPRA, ID_PRODUCTO, CANTIDAD) VALUES "
+					+ "(" + id_Compra + ", " + producto.getIDProducto() + ", " + cantidadProducto + ");");
+
+			return res;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return -1;
+		}
+	}
+
+	public int ModificarProductoCompra(int idProducto, int idCompra, int cantidad) {
+
+		try {
+			Connection c = (Connection) TransactionManager.getInstance().getTransaccion().getResource();
+			Statement s = c.createStatement();
+			int res = s.executeUpdate("UPDATE LINEADECOMPRA SET CANTIDAD = '" + cantidad + "' WHERE ID_COMPRA = "
+					+ idCompra + " AND ID_PRODUCTO = " + idProducto + ";");
+
+			return res;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return -1;
+		}
+	}
+
+	public int EliminarProductoCompra(int idCompra, int idProducto) {
+		TransactionManager tManager = TransactionManager.getInstance();
+		int exito = -1;
+		try {
+			Transaction t = tManager.getTransaccion();
+			Connection c = (Connection) t.getResource();
+			Statement s = c.createStatement();
+		    exito= s.executeUpdate("DELETE FROM LINEADECOMPRA WHERE ID_COMPRA = " + idCompra + " AND ID_PRODUCTO = " + idProducto);
+			
+			
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return exito;
+	}
+
+	public TLineaDeCompra LeerLinea(int id_Compra, int id_Producto) {
+		TLineaDeCompra lineaCompra = null;
+		try {
+			Transaction t = null;
+			Connection c;
+			try {
+				t = TransactionManager.getInstance().getTransaccion();
+				c = (Connection) t.getResource();
+
+			} catch (Exception e) {
+				c = DataSourceSingleton.getInstancia().getNewConnection();
+			}
+
+			Statement s = c.createStatement();
+			ResultSet r = s.executeQuery("SELECT * FROM LINEADECOMPRA WHERE ID_COMPRA = " + id_Compra
+					+ " AND ID_PRODUCTO = " + id_Producto + ";");
+			
+			r.next();
+			lineaCompra = new TLineaDeCompra();
+			lineaCompra.setID_Compra(r.getInt("ID_COMPRA"));
+			int idP = r.getInt("ID_PRODUCTO");
+			int cantidad = r.getInt("CANTIDAD");
+			lineaCompra.setCantidad(cantidad);
+			lineaCompra.setIDProducto(idP);
+			ResultSet r2 = s.executeQuery("SELECT PRECIO FROM PRODUCTO WHERE ID_PRODUCTO = " + idP + ";");
+			if (r2.next()) {
+				double precio = r2.getDouble("PRECIO");
+				lineaCompra.setPrecio(precio * cantidad);
+			}
+
+
+			if (t == null) {
+				c.close();
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			lineaCompra = null;
+		}
+		return lineaCompra;
+	}
+
+	public List<TLineaDeCompra> LeerTodasLineas(int idCompra) {
+		List<TLineaDeCompra> lineaDeCompras = null;
+
+		try {
+			Transaction t = null;
+			Connection c;
+			try {
+				t = TransactionManager.getInstance().getTransaccion();
+				c = (Connection) t.getResource();
+			} catch (Exception e) {
+				c = DataSourceSingleton.getInstancia().getNewConnection();
+			}
+
+			Statement s = c.createStatement();
+			ResultSet r = s.executeQuery("SELECT * FROM LINEADECOMPRA WHERE ID_COMPRA = " + idCompra + ";");
+			lineaDeCompras = new ArrayList<TLineaDeCompra>();
+			while (r.next()) {
+				TLineaDeCompra linea = new TLineaDeCompra();
+				linea.setID_Compra(r.getInt("ID_COMPRA"));
+				int idP = r.getInt("ID_PRODUCTO");
+				int cantidad = r.getInt("CANTIDAD");
+				linea.setCantidad(cantidad);
+				linea.setIDProducto(idP);
+				linea.setID_Compra(idCompra);
+				
+				Statement s2 = c.createStatement();
+				ResultSet r2 = s2.executeQuery("SELECT PRECIO FROM PRODUCTO WHERE ID_PRODUCTO = " + idP + ";");
+				if (r2.next()) {
+					double precio = r2.getDouble("PRECIO");
+					linea.setPrecio(precio * cantidad);
+				}
+				lineaDeCompras.add(linea);
+			}
+
+			if (t == null) {
+				c.close();
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return lineaDeCompras;
+	}
+}

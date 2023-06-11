@@ -1,0 +1,17 @@
+
+package Presentación.Command.TurnoCommands;
+
+import Presentación.Command.Command;
+import Presentación.Command.Context;
+
+
+public class calcularNominaTurnoCommand implements Command {
+	
+	public Context executeCommand(Object datos) {
+		//TODO
+		// begin-user-code
+		// TODO Auto-generated method stub
+		return null;
+		// end-user-code
+	}
+}

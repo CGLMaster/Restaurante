@@ -1,0 +1,69 @@
+package Integración.Compra;
+
+import Negocio.Compra.TLineaDeCompra;
+
+import java.util.List;
+
+public interface DAOProductoCompra {
+
+	/** 
+	* <!-- begin-UML-doc -->
+	* <!-- end-UML-doc -->
+	* @param id_Compra
+	* @param cantidadProducto
+	* @param producto
+	* @return
+	* @generated "UML a JPA (com.ibm.xtools.transform.uml2.ejb3.java.jpa.internal.UML2JPATransform)"
+	*/
+	public int AñadirProductoCompra(int id_Compra, int cantidadProducto, TProducto producto);
+
+	/** 
+	* <!-- begin-UML-doc -->
+	* <!-- end-UML-doc -->
+	* @param idProducto
+	* @param idCompra
+	* @param cantidad
+	* @return
+	* @generated "UML a JPA (com.ibm.xtools.transform.uml2.ejb3.java.jpa.internal.UML2JPATransform)"
+	*/
+	public int ModificarProductoCompra(int idProducto, int idCompra, int cantidad);
+
+	/** 
+	* <!-- begin-UML-doc -->
+	* <!-- end-UML-doc -->
+	* @param idCompra
+	* @param idProducto
+	* @return
+	* @generated "UML a JPA (com.ibm.xtools.transform.uml2.ejb3.java.jpa.internal.UML2JPATransform)"
+	*/
+	public int EliminarProductoCompra(int idCompra, int idProducto);
+
+	/** 
+	* <!-- begin-UML-doc -->
+	* <!-- end-UML-doc -->
+	* @param id_Compra
+	* @param id_Producto
+	* @return
+	* @generated "UML a JPA (com.ibm.xtools.transform.uml2.ejb3.java.jpa.internal.UML2JPATransform)"
+	*/
+	public TLineaDeCompra LeerLinea(int id_Compra, int id_Producto);
+
+	/** 
+	* <!-- begin-UML-doc -->
+	* <!-- end-UML-doc -->
+	* @param idCompra
+	* @return
+	* @generated "UML a JPA (com.ibm.xtools.transform.uml2.ejb3.java.jpa.internal.UML2JPATransform)"
+	*/
+	public Set<TLineaDeCompra> LeerTodasLineas(int idCompra);
+
+	public int aniadirProductoCompra(TLineaDeCompra lineaCompra);
+
+	public int modificarProductoCompra(TLineaDeCompra lineaCompra);
+
+	public int eliminarProductoCompra(int idCompra, int idProducto);
+
+	public TLineaDeCompra leerLinea(int id_Compra, int id_Producto);
+
+	public List<TLineaDeCompra> leerTodasLineas(int idCompra);
+}

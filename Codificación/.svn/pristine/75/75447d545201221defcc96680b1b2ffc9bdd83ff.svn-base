@@ -1,0 +1,23 @@
+/**
+ * 
+ */
+package Integración.Compra;
+
+import Negocio.Compra.TCarrito;
+import Negocio.Compra.TCompra;
+
+import java.util.List;
+
+
+public interface DAOCompra {
+
+	public int CerrarCompra(TCarrito compra);
+
+	public int RealizarDevolucion(int id_Compra);
+
+	public TCompra BuscarCompra(int id_Compra);
+	
+	public List<TCompra> BuscarTodasCompras();
+
+	public List<TCompra> BuscarTodasCompraCliente(int id_Cliente);
+}

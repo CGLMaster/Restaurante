@@ -1,0 +1,83 @@
+package Negocio.Proveedor;
+
+public class TProveedor {
+
+	private int ID;
+	/** 
+	* <!-- begin-UML-doc -->
+	* <!-- end-UML-doc -->
+	* @generated "UML a JPA (com.ibm.xtools.transform.uml2.ejb3.java.jpa.internal.UML2JPATransform)"
+	*/
+	private String Nombre;
+	private String nombre;
+	private boolean activo;
+
+	/** 
+	* <!-- begin-UML-doc -->
+	* <!-- end-UML-doc -->
+	* @generated "UML a JPA (com.ibm.xtools.transform.uml2.ejb3.java.jpa.internal.UML2JPATransform)"
+	*/
+	private int contProductos;
+
+	public TProveedor() {
+	}
+
+	public TProveedor(String nombre) {
+		this.nombre = nombre;
+	}
+
+	public TProveedor(int ID, String nombre) {
+		this.ID = ID;
+		this.nombre = nombre;
+	}
+
+	public int getID() {
+		return ID;
+	}
+
+	/** 
+	* <!-- begin-UML-doc -->
+	* <!-- end-UML-doc -->
+	* @return
+	* @generated "UML a JPA (com.ibm.xtools.transform.uml2.ejb3.java.jpa.internal.UML2JPATransform)"
+	*/
+	public String geNombre() {
+		// begin-user-code
+		// TODO Auto-generated method stub
+		return null;
+		// end-user-code
+	}
+
+	public void setID(int id) {
+		this.ID = id;
+	}
+
+	public String getNombre() {
+		return nombre;
+	}
+
+	public void setNombre(String nombre) {
+		this.nombre = nombre;
+	}
+
+	public boolean getActivo() {
+		return activo;
+	}
+
+	public void setActivo(boolean activo) {
+		this.activo = activo;
+	}
+
+	/** 
+	* <!-- begin-UML-doc -->
+	* <!-- end-UML-doc -->
+	* @return
+	* @generated "UML a JPA (com.ibm.xtools.transform.uml2.ejb3.java.jpa.internal.UML2JPATransform)"
+	*/
+	public int getContProductos() {
+		// begin-user-code
+		// TODO Auto-generated method stub
+		return 0;
+		// end-user-code
+	}
+}

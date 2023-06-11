@@ -1,0 +1,43 @@
+package Negocio.Producto;
+
+import java.util.List;
+
+public interface SAProducto {
+
+	public int altaProducto(TProducto prod);
+
+	/** 
+	* <!-- begin-UML-doc -->
+	* <!-- end-UML-doc -->
+	* @param prod
+	* @return
+	* @generated "UML a JPA (com.ibm.xtools.transform.uml2.ejb3.java.jpa.internal.UML2JPATransform)"
+	*/
+	public int bajaProducto(TProducto prod);
+
+	public int bajaProducto(int prod);
+
+	public int modificarProducto(TProducto prod);
+
+	public TProducto buscarProducto(int id);
+
+	public List<TProducto> buscarTodosProducto();
+
+	/** 
+	* <!-- begin-UML-doc -->
+	* <!-- end-UML-doc -->
+	* @param id_producto
+	* @param id_proveedor
+	* @return
+	* @generated "UML a JPA (com.ibm.xtools.transform.uml2.ejb3.java.jpa.internal.UML2JPATransform)"
+	*/
+	public int vincularProveedor(int id_producto, int id_proveedor);
+
+	public int vincularProveedor(TDistribuye distribuye);
+
+	public int desvincularProveedor(TDistribuye distribuye);
+
+	public List<TDistribuye> buscarVinculadosAProd(int id_producto);
+
+	public List<TProducto> buscarProductosPorRangoPrecio(int desde, int hasta);
+}

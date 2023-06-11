@@ -1,0 +1,110 @@
+/**
+ * 
+ */
+package Negocio.Plato;
+
+import java.util.Set;
+
+/** 
+* <!-- begin-UML-doc -->
+* <!-- end-UML-doc -->
+* @author Pabluno
+* @generated "UML a JPA (com.ibm.xtools.transform.uml2.ejb3.java.jpa.internal.UML2JPATransform)"
+*/
+public class SAPlatoImp implements SAPlato {
+	/** 
+	* (non-Javadoc)
+	* @see SAPlato#altaPlato(TPlato plato)
+	* @generated "UML a JPA (com.ibm.xtools.transform.uml2.ejb3.java.jpa.internal.UML2JPATransform)"
+	*/
+	public int altaPlato(TPlato plato) {
+		// begin-user-code
+		// TODO Auto-generated method stub
+		return 0;
+		// end-user-code
+	}
+
+	/** 
+	* (non-Javadoc)
+	* @see SAPlato#buscarPlato(Object id_Plato)
+	* @generated "UML a JPA (com.ibm.xtools.transform.uml2.ejb3.java.jpa.internal.UML2JPATransform)"
+	*/
+	public TPlato buscarPlato(Object id_Plato) {
+		// begin-user-code
+		// TODO Auto-generated method stub
+		return null;
+		// end-user-code
+	}
+
+	/** 
+	* (non-Javadoc)
+	* @see SAPlato#buscarTodosPlato()
+	* @generated "UML a JPA (com.ibm.xtools.transform.uml2.ejb3.java.jpa.internal.UML2JPATransform)"
+	*/
+	public Set<TPlato> buscarTodosPlato() {
+		// begin-user-code
+		// TODO Auto-generated method stub
+		return null;
+		// end-user-code
+	}
+
+	/** 
+	* (non-Javadoc)
+	* @see SAPlato#modificarPlato(TPlato plato)
+	* @generated "UML a JPA (com.ibm.xtools.transform.uml2.ejb3.java.jpa.internal.UML2JPATransform)"
+	*/
+	public int modificarPlato(TPlato plato) {
+		// begin-user-code
+		// TODO Auto-generated method stub
+		return 0;
+		// end-user-code
+	}
+
+	/** 
+	* (non-Javadoc)
+	* @see SAPlato#bajaPlato(int id_plato)
+	* @generated "UML a JPA (com.ibm.xtools.transform.uml2.ejb3.java.jpa.internal.UML2JPATransform)"
+	*/
+	public int bajaPlato(int id_plato) {
+		// begin-user-code
+		// TODO Auto-generated method stub
+		return 0;
+		// end-user-code
+	}
+
+	/** 
+	* (non-Javadoc)
+	* @see SAPlato#aniadirIngredienteAPlato(int id_ingrediente, TPlato plato)
+	* @generated "UML a JPA (com.ibm.xtools.transform.uml2.ejb3.java.jpa.internal.UML2JPATransform)"
+	*/
+	public int aniadirIngredienteAPlato(int id_ingrediente, TPlato plato) {
+		// begin-user-code
+		// TODO Auto-generated method stub
+		return 0;
+		// end-user-code
+	}
+
+	/** 
+	* (non-Javadoc)
+	* @see SAPlato#eliminarIngredienteAPlato(int id_ingrediente, TPlato plato)
+	* @generated "UML a JPA (com.ibm.xtools.transform.uml2.ejb3.java.jpa.internal.UML2JPATransform)"
+	*/
+	public int eliminarIngredienteAPlato(int id_ingrediente, TPlato plato) {
+		// begin-user-code
+		// TODO Auto-generated method stub
+		return 0;
+		// end-user-code
+	}
+
+	/** 
+	* (non-Javadoc)
+	* @see SAPlato#mostrarIngredientesPlato(Object id_Plato)
+	* @generated "UML a JPA (com.ibm.xtools.transform.uml2.ejb3.java.jpa.internal.UML2JPATransform)"
+	*/
+	public TPlato mostrarIngredientesPlato(Object id_Plato) {
+		// begin-user-code
+		// TODO Auto-generated method stub
+		return null;
+		// end-user-code
+	}
+}

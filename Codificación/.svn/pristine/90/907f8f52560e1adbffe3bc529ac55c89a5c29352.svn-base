@@ -1,0 +1,214 @@
+package Negocio.Producto;
+
+import java.util.List;
+
+import Integración.FactoriaIntegracion.FactoriaIntegracion;
+import Negocio.Marca.TMarca;
+import Negocio.Proveedor.TProveedor;
+import Negocio.Seccion.TSeccion;
+import Negocio.Transaction.Transaction;
+import Negocio.Transaction.TransactionManager;
+import Integración.Producto.DAODistribuye;
+import Integración.Producto.DAOProducto;
+import Integración.Proveedor.DAOProveedor;
+
+public class SAProductoImp implements SAProducto {
+
+	public int altaProducto(TProducto prod) {
+		int res = -1;
+		try {
+			Transaction t = TransactionManager.getInstance().nuevaTransaccion();
+			t.start();
+
+			TMarca marca = FactoriaIntegracion.getInstance().getDAOMarca().buscarMarca(prod.getIDMarca());
+			TSeccion secc = FactoriaIntegracion.getInstance().getDAOSeccion().buscarSeccion(prod.getIDSeccion());
+
+			if ((marca != null && marca.getActivo()) && (secc != null && secc.getActivo())) {
+				TProducto prod_exist = FactoriaIntegracion.getInstance().getDAOProducto()
+						.buscarProductoPorMarcayNombre(prod.getNombre(), prod.getIDMarca());
+				if (prod_exist == null) {
+					marca.setContProductos(marca.getContProductos() + 1);
+					secc.setCont_productos(secc.getCont_productos() + 1);
+					int update = 0;
+					update += FactoriaIntegracion.getInstance().getDAOMarca().modificarMarca(marca);
+					update += FactoriaIntegracion.getInstance().getDAOSeccion().modificarSeccion(secc);
+					res = FactoriaIntegracion.getInstance().getDAOProducto().altaProducto(prod);
+					if (res > 0 && update == 2) {
+						t.commit();
+					}
+				} else {
+					t.rollback();
+					throw new Exception();
+				}
+			} else {
+				t.rollback();
+				throw new Exception();
+			}
+
+		} catch (Exception e) {
+			res = -1;
+			e.printStackTrace();
+		}
+		return res;
+
+	}
+
+	public int bajaProducto(TProducto prod) {
+		int res = 0;
+		try {
+			Transaction t = TransactionManager.getInstance().nuevaTransaccion();
+			t.start();
+
+			TProducto prod_exist = FactoriaIntegracion.getInstance().getDAOProducto()
+					.buscarProducto(prod.getIDProducto());
+			// FALTA DISTRIBUYE
+			if (prod_exist == null) {
+				res = FactoriaIntegracion.getInstance().getDAOProducto().bajaProducto(prod);
+				t.commit();
+			} else {
+				t.rollback();
+				res = -1;
+				throw new Exception();
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return res;
+	}
+
+	public int modificarProducto(TProducto prod) {
+		try {
+			Transaction t = TransactionManager.getInstance().nuevaTransaccion();
+			t.start();
+			DAOProducto dao = FactoriaIntegracion.getInstance().getDAOProducto();
+			TProducto p = dao.buscarProducto(prod.getIDProducto());
+			if (p != null) {
+				TProducto aux = dao.buscarProductoPorMarcayNombre(prod.getNombre(), prod.getIDMarca());
+				if (aux == null) {
+					int res = dao.modificarProducto(prod);
+					if (res == 1)
+						t.commit();
+					else {
+						t.rollback();
+						throw new Exception();
+					}
+				} else {
+					t.rollback();
+					throw new Exception();
+				}
+			}
+			return 1;
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			return -1;
+		}
+	}
+
+	public TProducto buscarProducto(int id) {
+		return FactoriaIntegracion.getInstance().getDAOProducto().buscarProducto(id);
+	}
+
+	public List<TProducto> buscarTodosProducto() {
+		return FactoriaIntegracion.getInstance().getDAOProducto().buscarTodosProducto();
+	}
+
+	public int vincularProveedor(TDistribuye distribuye) { // esto es un
+															// TDistribuye
+		try {
+			Transaction t = TransactionManager.getInstance().nuevaTransaccion();
+			t.start();
+			DAOProducto daoP = FactoriaIntegracion.getInstance().getDAOProducto();
+			DAOProveedor daoPR = FactoriaIntegracion.getInstance().getDAOProveedor();
+			DAODistribuye daoD = FactoriaIntegracion.getInstance().getDAODistribuye();
+
+			TProducto prod = daoP.buscarProducto(distribuye.getIdProducto());
+			if (prod != null) {
+				TProveedor prov = daoPR.buscarProveedor(distribuye.getIdProveedor());
+				if (prod.getActivo() && prov != null) {
+					TDistribuye d = daoD.buscarVinculoProducto(distribuye.getIdProducto(), distribuye.getIdProveedor());
+					if (prov.getActivo() && d == null) {
+						int res = daoD.vincularProductoProveedor(distribuye);
+						return res;
+					}
+				}
+			}
+
+			throw new Exception();
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			return -1;
+		}
+	}
+
+	public int desvincularProveedor(TDistribuye distribuye) {
+		try {
+			Transaction t = TransactionManager.getInstance().nuevaTransaccion();
+			t.start();
+			DAOProducto daoP = FactoriaIntegracion.getInstance().getDAOProducto();
+			DAOProveedor daoPR = FactoriaIntegracion.getInstance().getDAOProveedor();
+			DAODistribuye daoD = FactoriaIntegracion.getInstance().getDAODistribuye();
+
+			TProducto prod = daoP.buscarProducto(distribuye.getIdProducto());
+			if (prod != null) {
+				TProveedor prov = daoPR.buscarProveedor(distribuye.getIdProveedor());
+				if (prod.getActivo() && prov != null) {
+					TDistribuye d = daoD.buscarVinculoProducto(distribuye.getIdProducto(), distribuye.getIdProveedor());
+					if (prov.getActivo() && d != null) {
+						int res = daoD.desvincularProductoProveedor(distribuye);
+						return res;
+					}
+				}
+			}
+
+			throw new Exception();
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			return -1;
+		}
+	}
+
+	public List<TProducto> buscarProductosPorRangoPrecio(int desde, int hasta) {
+		try {
+			Transaction t = TransactionManager.getInstance().nuevaTransaccion();
+			t.start();
+			DAOProducto daoP = FactoriaIntegracion.getInstance().getDAOProducto();
+			if (desde >= 0 && desde < hasta) {
+				List<TProducto> res = daoP.buscarProductosPorRangoPrecio(desde, hasta);
+				return res;
+			}
+			throw new Exception();
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+
+	@Override
+	public List<TDistribuye> buscarVinculadosAProd(int id_producto) {
+		try {
+			Transaction t = TransactionManager.getInstance().nuevaTransaccion();
+			t.start();
+			DAOProducto daoP = FactoriaIntegracion.getInstance().getDAOProducto();
+			DAODistribuye daoD = FactoriaIntegracion.getInstance().getDAODistribuye();
+
+			TProducto prod = daoP.buscarProducto(id_producto);
+			if (prod != null) {
+				if (prod.getActivo()) {
+					List<TDistribuye> res = daoD.buscarTodosVinculosProducto(id_producto);
+					return res;
+				}
+			}
+
+			throw new Exception();
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+}

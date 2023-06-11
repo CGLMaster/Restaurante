@@ -1,0 +1,97 @@
+/**
+ * 
+ */
+package Integración.FactoriaIntegracion;
+
+import Integración.Marca.DAOMarca;
+import Integración.Marca.DAOMarcaImp;
+import Integración.Seccion.DAOSeccion;
+import Integración.Seccion.DAOSeccionImp;
+import Integración.Trabajador.DAOTrabajador;
+import Integración.Trabajador.DAOTrabajadorImp;
+import Integración.Producto.DAOProducto;
+import Integración.Producto.DAOProductoImp;
+import Integración.Cliente.DAOCliente;
+import Integración.Cliente.DAOClienteImp;
+import Integración.Compra.DAOCompra;
+import Integración.Compra.DAOCompraImp;
+import Integración.Proveedor.DAOProveedor;
+import Integración.Proveedor.DAOProveedorImp;
+import Integración.Producto.DAODistribuye;
+import Integración.Producto.DAODistribuyeImp;
+import Integración.Compra.DAOProductoCompra;
+import Integración.Compra.DAOProductoCompraImp;
+
+
+public class FactoriaIntegracionImp extends FactoriaIntegracion {
+	
+	public DAOMarca getDAOMarca() {
+		// begin-user-code
+		// TODO Auto-generated method stub
+		return new DAOMarcaImp();
+		// end-user-code
+	}
+
+	
+	public DAOSeccion getDAOSeccion() {
+		// begin-user-code
+		return new DAOSeccionImp();
+		// end-user-code
+	}
+
+	
+	public DAOTrabajador getDAOTrabajador() {
+		// begin-user-code
+		// TODO Auto-generated method stub
+		return new DAOTrabajadorImp();
+		// end-user-code
+	}
+
+	
+	public DAOProducto getDAOProducto() {
+		// begin-user-code
+		// TODO Auto-generated method stub
+		return new DAOProductoImp();
+		// end-user-code
+	}
+
+	
+	public DAOCliente getDAOCliente() {
+		// begin-user-code
+		// TODO Auto-generated method stub
+		return new DAOClienteImp();
+		// end-user-code
+	}
+
+	
+	public DAOCompra getDAOCompra() {
+		// begin-user-code
+		// TODO Auto-generated method stub
+		return new DAOCompraImp();
+		// end-user-code
+	}
+
+	
+	public DAOProveedor getDAOProveedor() {
+		// begin-user-code
+		// TODO Auto-generated method stub
+		return new DAOProveedorImp();
+		// end-user-code
+	}
+
+	
+	public DAODistribuye getDAODistribuye() {
+		// begin-user-code
+		// TODO Auto-generated method stub
+		return new DAODistribuyeImp();
+		// end-user-code
+	}
+
+	
+	public DAOProductoCompra getDAOProductoCompra() {
+		// begin-user-code
+		// TODO Auto-generated method stub
+		return new DAOProductoCompraImp();
+		// end-user-code
+	}
+}

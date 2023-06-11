@@ -1,0 +1,54 @@
+package Presentación.Command;
+
+public class Context {
+
+	private int evento;
+
+	private Object datos;
+
+	public Context(int evento, Object datos) {
+		this.datos = datos;
+		this.evento = evento;
+	}
+
+	public Context(int evento) {
+		this.evento = evento;
+	}
+
+	public Object getDatos() {
+
+		return datos;
+	}
+
+	public int getEvento() {
+		return evento;
+	}
+
+	/** 
+	* <!-- begin-UML-doc -->
+	* <!-- end-UML-doc -->
+	* @param evento
+	* @param datos
+	* @generated "UML a JPA (com.ibm.xtools.transform.uml2.ejb3.java.jpa.internal.UML2JPATransform)"
+	*/
+	public void CONTEXT(int evento, Object datos) {
+		// begin-user-code
+		// TODO Auto-generated method stub
+
+		// end-user-code
+	}
+
+	/** 
+	* <!-- begin-UML-doc -->
+	* <!-- end-UML-doc -->
+	* @param evento
+	* @generated "UML a JPA (com.ibm.xtools.transform.uml2.ejb3.java.jpa.internal.UML2JPATransform)"
+	*/
+	public void CONTEXT(int evento) {
+		// begin-user-code
+		// TODO Auto-generated method stub
+
+		// end-user-code
+	}
+
+}

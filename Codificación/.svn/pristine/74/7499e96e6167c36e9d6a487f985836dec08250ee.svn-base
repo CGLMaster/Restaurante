@@ -1,0 +1,27 @@
+
+package Integración.Producto;
+
+import java.util.List;
+import Negocio.Producto.TProducto;
+
+
+public interface DAOProducto {
+	
+	public List<TProducto> buscarProductosPorMarca(int id_marca);
+	
+	public int altaProducto(TProducto p);
+
+	public int bajaProducto(TProducto prod);
+
+	public int modificarProducto(TProducto prod);
+
+	public TProducto buscarProducto(int id);
+
+	public List<TProducto> buscarTodosProducto();
+	
+	public int reactivar(int id_producto);
+
+	TProducto buscarProductoPorMarcayNombre(String nombre_prod, int id_marca);
+	
+	public List<TProducto> buscarProductosPorRangoPrecio(int desde, int hasta); 
+}

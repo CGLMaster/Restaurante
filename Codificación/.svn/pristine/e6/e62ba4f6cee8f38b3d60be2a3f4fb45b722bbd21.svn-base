@@ -1,0 +1,21 @@
+
+package Presentación.Command.TurnoCommands;
+
+import Negocio.FactoriaNegocio.FactoriaSA;
+import Negocio.Marca.TMarca;
+import Negocio.Turno.TTurno;
+import Presentación.Command.Command;
+import Presentación.Command.Context;
+import Presentación.Controller.Eventos;
+
+
+public class ModificarTurnoCommand implements Command {
+	
+	public Context executeCommand(Object datos) {
+		if (FactoriaSA.getInstance().getSATurno().modificarTurno((TTurno) datos) != -1) {
+			return new Context(Eventos.RES_MODIFICAR_TURNO_OK, null);
+		} else {
+			return new Context(Eventos.RES_MODIFICAR_TURNO_KO, null);
+		}
+	}
+}

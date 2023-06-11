@@ -1,0 +1,331 @@
+package Presentación.FactoriaVistas;
+
+import java.util.List;
+
+import javax.swing.JFrame;
+
+import Negocio.Cliente.TCliente;
+import Negocio.Compra.TCarrito;
+import Negocio.Compra.TCompra;
+import Negocio.Compra.TCompraConProductos;
+import Negocio.Marca.TMarca;
+import Negocio.Producto.TProducto;
+import Negocio.Proveedor.TProveedor;
+import Negocio.Seccion.TSeccion;
+import Presentación.VPrincipal;
+import Presentación.Cliente.VAltaCliente;
+import Presentación.Cliente.VBajaCliente;
+import Presentación.Cliente.VBuscarUnCliente;
+import Presentación.Cliente.VCliente;
+import Presentación.Cliente.VModificarCliente;
+import Presentación.Command.Context;
+import Presentación.Compra.VAbrirCompra;
+import Presentación.Compra.VBuscarCompra;
+import Presentación.Compra.VBuscarTodosCompra;
+import Presentación.Controller.Eventos;
+import Presentación.Marca.VMarca;
+import Presentación.Marca.VistasCasos_de_Uso.VBuscarMarca;
+import Presentación.Marca.VistasCasos_de_Uso.VCrearMarca;
+import Presentación.Marca.VistasCasos_de_Uso.VModificarMarca;
+import Presentación.Producto.VProducto;
+import Presentación.Producto.VistasCasos_de_UsoPr.VAltaProducto;
+import Presentación.Producto.VistasCasos_de_UsoPr.VBuscarProducto;
+import Presentación.Producto.VistasCasos_de_UsoPr.VModificarPr;
+import Presentación.Proveedor.VProveedor;
+import Presentación.Proveedor.VBuscarProveedor;
+import Presentación.Proveedor.VModificarProveedor;
+import Presentación.Seccion.VAltaSeccion;
+import Presentación.Seccion.VBajaSeccion;
+import Presentación.Seccion.VBuscarSeccion;
+import Presentación.Seccion.VModificarSeccion;
+import Presentación.Seccion.VSeccion;
+import Presentación.Trabajador.VAltaTrabajador;
+import Presentación.Trabajador.VTrabajador;
+import Presentación.Trabajador.VBuscarTrabajador;
+import Presentación.Trabajador.VModificarTrabajador;
+import Negocio.Trabajador.TTrabajador;
+
+public class FactoriaVistasImp extends FactoriaVistas {
+	IGUI currentIGUI;
+
+	@Override
+	public IGUI generarVista(Context contexto) {
+		switch (contexto.getEvento()) {
+		// VPrincipal
+		case Eventos.CREAR_VPRINCIPAL:
+			currentIGUI = new VPrincipal((int) contexto.getDatos());
+			return currentIGUI;
+
+		// COMANDOS MARCA
+		case Eventos.CREAR_VMARCA:
+			currentIGUI = new VMarca((List<TMarca>) contexto.getDatos());
+			return currentIGUI;
+
+		case Eventos.ALTA_MARCA:
+			currentIGUI = new VCrearMarca();
+			return currentIGUI;
+
+		// case Eventos.BAJA_MARCA: return new VBajaMarca();
+
+		case Eventos.CREAR_VMODIFICAR_MARCA:
+			currentIGUI = new VModificarMarca((TMarca) contexto.getDatos());
+			System.out.println("FACTORIA VISTAS");
+			return currentIGUI;
+
+		case Eventos.BUSCAR_MARCA: 
+			currentIGUI = new VBuscarMarca((TMarca) contexto.getDatos());
+			return currentIGUI;
+		
+			
+		case Eventos.CREAR_VCLIENTE:
+			currentIGUI = new VCliente((List<TCliente>) contexto.getDatos());
+			return currentIGUI;
+			
+		  case Eventos.VALTA_CLIENTE:
+			  currentIGUI = new VAltaCliente();
+			  return currentIGUI;
+		 
+		  case Eventos.VBAJA_CLIENTE: 
+			  currentIGUI = new VBajaCliente((TCliente) contexto.getDatos());
+				return currentIGUI;
+		  
+		  case Eventos.VMODIFICAR_CLIENTE: 
+			  currentIGUI = new VModificarCliente((TCliente) contexto.getDatos());
+			  return currentIGUI;
+		  
+		  case Eventos.VBUSCAR_CLIENTE: 
+			currentIGUI = new VBuscarUnCliente((TCliente) contexto.getDatos());
+			return currentIGUI;
+		 /* 
+		 * case Eventos.BUSCAR_TODOS_CLIENTE: return new VBuscarTodosCliente();
+		 * 
+		 * //COMANDOS TRABAJADOR
+		 * 
+		 * case Eventos.ALTA_TRABAJADOR: return new VAltaTrabajador();
+		 * 
+		 * //VPrincipal case Eventos.CREAR_VPRINCIPAL: return new
+		 * VPrincipal((int) contexto.getDatos());
+		 * 
+		 * 
+		 * //COMANDOS TRABAJADOR case Eventos.CREAR_VMARCA: return new
+		 * VMarca((List<TMarca>) contexto.getDatos());
+		 * 
+		 * case Eventos.ALTA_MARCA: return new VCrearMarca();
+		 * 
+		 * //case Eventos.BAJA_MARCA: return new VBajaMarca();
+		 * 
+		 * //case Eventos.MODIFICAR_MARCA: return new VModificarMarca();
+		 * 
+		 * //case Eventos.BUSCAR_MARCA: return new VBuscarMarca();
+		 * 
+		 * 
+		 * 
+		 * 
+		 * /*case Eventos.ALTA_CLIENTE:return new VAltaCliente();
+		 * 
+		 * case Eventos.BAJA_CLIENTE: return new VBajaCliente();
+		 * 
+		 * case Eventos.MODIFICAR_CLIENTE: return new VModificarCliente();
+		 * 
+		 * case Eventos.BUSCAR_CLIENTE: return new VBuscarUnCliente();
+		 * 
+		 * case Eventos.BUSCAR_TODOS_CLIENTE: return new VBuscarTodosCliente();
+		 */
+
+		// VISTAS TRABAJADOR
+
+		case Eventos.CREAR_VTRABAJADOR:
+			currentIGUI = new VTrabajador((List<TTrabajador>) contexto.getDatos());
+			return currentIGUI; 
+
+		case Eventos.ALTA_TRABAJADOR:
+			currentIGUI = new VAltaTrabajador();
+			return currentIGUI; 
+			
+		case Eventos.BUSCAR_TRABAJADOR_ID: 
+			currentIGUI = new VBuscarTrabajador((TTrabajador) contexto.getDatos());
+			return currentIGUI; 
+			
+		case Eventos.BUSCAR_TRABAJADOR_DNI: 
+			currentIGUI = new VBuscarTrabajador((TTrabajador) contexto.getDatos());
+			return currentIGUI;
+			
+		case Eventos.MODIFICAR_TRABAJADOR: 
+			currentIGUI = new VModificarTrabajador((TTrabajador) contexto.getDatos());
+			return currentIGUI;
+			
+		// VISTAS PROVEEDOR
+
+		case Eventos.CREAR_VPROVEEDOR:
+			currentIGUI = new VProveedor((List<TProveedor>) contexto.getDatos());
+			return currentIGUI; 
+			
+		case Eventos.MODIFICAR_PROVEEDOR: 
+			currentIGUI = new VModificarProveedor((TProveedor) contexto.getDatos());
+			return currentIGUI;
+			
+		case Eventos.BUSCAR_PROVEEDOR:
+			currentIGUI = new VBuscarProveedor((TProveedor) contexto.getDatos());
+			return currentIGUI;
+
+			
+			
+		//Vistas Producto
+		case Eventos.ALTA_PRODUCTO: 
+			currentIGUI = new VAltaProducto();
+			return currentIGUI;
+			
+		case Eventos.MODIFICAR_PRODUCTO:  
+			currentIGUI = new VModificarPr((TProducto) contexto.getDatos());
+			return currentIGUI;
+			
+		case Eventos.CREAR_VPRODUCTO:  
+			currentIGUI = new VProducto((List<TProducto>) contexto.getDatos());
+			return currentIGUI;
+			
+		case Eventos.BUSCAR_PRODUCTO: 
+			currentIGUI = new VBuscarProducto((TProducto) contexto.getDatos());
+			return currentIGUI;
+
+		/*
+		 * 
+		 * //COMANDOS SECCION
+		 * 
+		 * case Eventos.ALTA_SECCION: return new VAltaSeccion();
+		 * 
+		 * case Eventos.BAJA_SECCION: return new VBajaSeccion();
+		 * 
+		 * case Eventos.MODIFICAR_SECCION: return new VModificarSeccion();
+		 * 
+		 * case Eventos.BUSCAR_SECCION: return new VBuscarUnSeccion();
+		 * 
+		 * case Eventos.BUSCAR_TODOS_SECCION: return new VBuscarTodosSeccion();
+		 * 
+		 * //COMANDOS PRODUCTO
+		 * 
+		 * case Eventos.ALTA_PRODUCTO: return new VAltaProducto();
+		 * 
+		 * case Eventos.BAJA_PRODUCTO: return new VBajaProducto();
+		 * 
+		 * 
+		 * 
+		 * case Eventos.BUSCAR_PRODUCTO: return new VBuscarUnProducto();
+		 * 
+		 * case Eventos.BUSCAR_TODOS_PRODUCTO: return new
+		 * VBuscarTodosProducto();
+		 * 
+		 * case Eventos.VINCULAR_PRODUCTO_PROVEEDOR: return new
+		 * VVincularProductoProveedor();
+		 * 
+		 * case Eventos.DESVINCULAR_PRODUCTO_PROVEEDOR: return new
+		 * VDesvincularProductoProveedor();
+		 * 
+		 * case Eventos.BUSCAR_PRODUCTOS_PROVEEDOR_POR_RANGO_PRECIO: return new
+		 * VBuscarProductoProveedorPorRango();
+		 * 
+		 */
+		 
+	 	//COMANDOS COMPRA
+		  
+		case Eventos.BUSCAR_TODOS_COMPRA:
+			currentIGUI = new VBuscarTodosCompra((List<TCompra>) contexto.getDatos());
+			return currentIGUI;
+		
+		case Eventos.BUSCAR_COMPRA_ID:
+			currentIGUI = new VBuscarCompra((TCompraConProductos) contexto.getDatos());
+			return currentIGUI;
+			
+			
+		case Eventos.ABRIR_COMPRA: 
+			currentIGUI = new VAbrirCompra((TCarrito) contexto.getDatos());
+			return currentIGUI;
+			
+		case Eventos.CREAR_VCOMPRA: 
+			currentIGUI = new VAbrirCompra((TCarrito) contexto.getDatos());
+			return currentIGUI;
+			
+		 /* case Eventos.ABRIR_COMPRA: return new VAbrirCompra();
+		 * 
+		 * case Eventos.BAJA_TRABAJADOR: return new VBajaTrabajador();
+		 * 
+		 * case Eventos.MODIFICAR_TRABAJADOR: return new VModificarTrabajador();
+		 * 
+		 * case Eventos.BUSCAR_TRABAJADOR_DNI: return new
+		 * VBuscarTrabajadorDNI();
+		 * 
+		 * case Eventos.BUSCAR_TRABAJADOR_ID: return new VBuscarTrabajadorID();
+		 */
+
+
+		
+		  
+		  //COMANDOS SECCION
+		  
+		  case Eventos.VALTA_SECCION: 
+			  currentIGUI = new VAltaSeccion();
+				return currentIGUI;
+		 
+		  case Eventos.VBAJA_SECCION: 
+			  currentIGUI = new VBajaSeccion((TSeccion) contexto.getDatos());
+				return currentIGUI;
+		  
+		  case Eventos.VMODIFICAR_SECCION: 
+			  currentIGUI = new VModificarSeccion((TSeccion) contexto.getDatos());
+			  return currentIGUI;
+		  
+		  case Eventos.VBUSCAR_SECCION:
+			  currentIGUI = new VBuscarSeccion((TSeccion) contexto.getDatos());
+				return currentIGUI;
+		  
+		  case Eventos.CREAR_VSECCION:
+			  currentIGUI = new VSeccion((List<TSeccion>) contexto.getDatos());
+				return currentIGUI;
+		  
+		  //COMANDOS PRODUCTO
+		  /* 
+		  case Eventos.ALTA_PRODUCTO: return new VAltaProducto();
+		 
+		  case Eventos.BAJA_PRODUCTO: return new VBajaProducto();
+		 
+		 * case Eventos.MODIFICAR_PRODUCTO: return new VModificarProducto();
+		 * 
+		 * case Eventos.BUSCAR_PRODUCTO: return new VBuscarUnProducto();
+		 * 
+		 * case Eventos.BUSCAR_TODOS_PRODUCTO: return new
+		 * VBuscarTodosProducto();
+		 * 
+		 * case Eventos.VINCULAR_PRODUCTO_PROVEEDOR: return new
+		 * VVincularProductoProveedor();
+		 * 
+		 * case Eventos.DESVINCULAR_PRODUCTO_PROVEEDOR: return new
+		 * VDesvincularProductoProveedor();
+		 * 
+		 * case Eventos.BUSCAR_PRODUCTOS_PROVEEDOR_POR_RANGO_PRECIO: return new
+		 * VBuscarProductoProveedorPorRango();
+		 * 
+		 * 
+		 * //COMANDOS COMPRA
+		 * 
+		 * case Eventos.ABRIR_COMPRA: return new VAbrirCompra();
+		 * 
+		 * //case Eventos.PAGAR_COMPRA: return new VCerrarCompra();
+		 * 
+		 * case Eventos.ANIADIR_PRODUCTO_COMPRA: return new
+		 * VAniadirProductoACompra();
+		 * 
+		 * case Eventos.ELIMINAR_PRODUCTO_COMPRA: return new
+		 * VEliminarProductoACompra();
+		 * 
+		 * case Eventos.BUSCAR_COMPRA_ID: return new VBuscarUnCompraPorID();
+		 * 
+		 * case Eventos.BUSCAR_TODOS_COMPRA: return new VBuscarTodosCompra();
+		 */
+		}
+		return null;
+	}
+
+	@Override
+	public IGUI getCurrentView() {
+		return currentIGUI;
+	}
+}

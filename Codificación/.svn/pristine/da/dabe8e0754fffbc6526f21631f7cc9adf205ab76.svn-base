@@ -1,0 +1,79 @@
+package Negocio.Marca;
+
+public class TMarca {
+
+	private int ID;
+
+	private String Nombre;
+
+	private String Web;
+
+	private int contProductosActivos;
+
+	private boolean activo;
+
+	public TMarca(int id, String Nombre, int contProductosActivos, boolean activo) {
+		this.ID = id;
+		this.Nombre = Nombre;
+		this.contProductosActivos = contProductosActivos;
+		this.activo = activo;
+	}
+
+	public TMarca(int id, String Nombre, String web, int contProductosActivos, boolean activo) {
+		this.ID = id;
+		this.Web = web;
+		this.Nombre = Nombre;
+		this.contProductosActivos = contProductosActivos;
+		this.activo = activo;
+	}
+
+	public TMarca() {
+
+	}
+
+	public TMarca(String nombre) {
+		Nombre = nombre;
+	}
+
+	public int getID() {
+		return ID;
+	}
+
+	public String getNombre() {
+		return Nombre;
+	}
+
+	public String getWeb() {
+		return Web;
+	}
+
+	public void setID(int id_marca) {
+		ID = id_marca;
+	}
+
+	public void setNombre(String nombre) {
+		Nombre = nombre;
+	}
+
+	public void setWeb(String web) {
+		Web = web;
+	}
+
+	public int getContProductos() {
+		return contProductosActivos;
+	}
+
+	public void setContProductos(int cont) {
+		contProductosActivos = cont;
+	}
+
+	public boolean getActivo() {
+		return activo;
+	}
+
+	
+
+	public void setActivo(Boolean b) {
+		activo = b;
+	}
+}

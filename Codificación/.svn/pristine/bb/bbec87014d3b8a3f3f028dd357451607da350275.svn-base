@@ -1,0 +1,89 @@
+package Integración.Trabajador;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.ConcurrentHashMap;
+
+import Negocio.Cliente.SAClienteImp;
+import Negocio.Cliente.TCliente;
+import Negocio.Trabajador.TTrabajador;
+import Negocio.Transaction.Transaction;
+import Negocio.Transaction.TransactionFactory;
+import Negocio.Transaction.TransactionManager;
+
+public class pruebas {
+
+	public static void main(String[] args) {
+		
+		
+		try {
+			TransactionManager transactionManager = TransactionManager.getInstance();
+			Transaction transaccion = transactionManager.nuevaTransaccion();
+			transaccion.start();
+			
+			DAOTrabajadorImp dao = new DAOTrabajadorImp();
+			
+			
+			//ALTA TRABAJADOR
+			/*TTrabajador trabajador = new TTrabajador("Juan", "juan@gmail.com", "987654321");
+			dao.altaTrabajador(trabajador);*/
+			
+			//BAJA TRABAJADOR
+			//dao.bajaTrabajador(4);
+			
+			//MODIFICAR TRABAJADOR
+			/*TTrabajador nuevoTrabajador = new TTrabajador("Oscar", "lololol@gmail.com", "123456789");
+			nuevoTrabajador.setId(4);
+			dao.modificarTrabajador(nuevoTrabajador);*/
+			
+			//BUSCAR TODOS TRABAJADORES
+			ArrayList<TTrabajador> trabajadores = (ArrayList<TTrabajador>) dao.buscarTodosTrabajador();
+			/*for(TTrabajador trabajador : trabajadores){
+				System.out.println(trabajador.getNombre());
+			}*/
+			
+			//BUSCAR TRABAJADOR POR ID
+			/*TTrabajador trabajador = dao.buscarDatosTrabajadorID(5);
+			System.out.println(trabajador.getNombre());*/
+			
+			//BUSCAR TRABAJADOR POR DNI
+			/*TTrabajador trabajador = dao.buscarDatosTrabajadorDNI("987654321");
+			System.out.println(trabajador.getNombre());*/
+			
+			//REACTIVAR
+			//dao.reactivar(4);
+			
+
+			
+			transaccion.commit();
+			
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		/*Thread thread = Thread.currentThread();
+		
+		ConcurrentHashMap<Thread, Transaction>concurrentHashMap = new ConcurrentHashMap<Thread, Transaction>();
+
+		Transaction t;
+		try {
+			t = TransactionFactory.getInstance().generaTransaccion();
+			concurrentHashMap.put(Thread.currentThread(), t);
+			
+			if(concurrentHashMap.get(Thread.currentThread()) != null){
+				System.out.println("funciona");
+			}
+			else{
+				System.out.println("no funciona");
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}*/
+		
+		
+
+	}
+
+}

@@ -1,0 +1,39 @@
+package Negocio.Proveedor;
+
+
+public class TProveedor {
+
+	private int ID;
+	private String nombre;
+	private boolean activo;
+	
+	public TProveedor(){}
+
+	public TProveedor(String nombre){
+		this.nombre = nombre;
+	}
+
+	public int getID() {
+		return ID;
+	}
+	
+	public void setID(int id) {
+		this.ID = id;
+	}
+
+	public String getNombre() {
+		return nombre;
+	}
+
+	public void setNombre(String nombre) {
+		this.nombre = nombre;
+	}
+	
+	public boolean getActivo() {
+		return activo;
+	}
+
+	public void setActivo(boolean activo) {
+		this.activo = activo;
+	}
+}

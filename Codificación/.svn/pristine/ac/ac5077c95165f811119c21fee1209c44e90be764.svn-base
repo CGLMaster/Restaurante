@@ -1,0 +1,61 @@
+package Integración.Compra;
+
+import Negocio.Compra.TCompra;
+
+import java.util.List;
+
+public interface DAOCompra {
+
+	/** 
+	* <!-- begin-UML-doc -->
+	* <!-- end-UML-doc -->
+	* @param id_Compra
+	* @return
+	* @generated "UML a JPA (com.ibm.xtools.transform.uml2.ejb3.java.jpa.internal.UML2JPATransform)"
+	*/
+	public int CerrarCompra(int id_Compra);
+
+	/** 
+	* <!-- begin-UML-doc -->
+	* <!-- end-UML-doc -->
+	* @param id_Compra
+	* @return
+	* @generated "UML a JPA (com.ibm.xtools.transform.uml2.ejb3.java.jpa.internal.UML2JPATransform)"
+	*/
+	public int RealizarDevolucion(int id_Compra);
+
+	/** 
+	* <!-- begin-UML-doc -->
+	* <!-- end-UML-doc -->
+	* @param id_Compra
+	* @return
+	* @generated "UML a JPA (com.ibm.xtools.transform.uml2.ejb3.java.jpa.internal.UML2JPATransform)"
+	*/
+	public TCompra BuscarCompra(int id_Compra);
+
+	/** 
+	* <!-- begin-UML-doc -->
+	* <!-- end-UML-doc -->
+	* @return
+	* @generated "UML a JPA (com.ibm.xtools.transform.uml2.ejb3.java.jpa.internal.UML2JPATransform)"
+	*/
+	public Set<TCompra> BuscarTodasCompras();
+
+	/** 
+	* <!-- begin-UML-doc -->
+	* <!-- end-UML-doc -->
+	* @param id_Cliente
+	* @return
+	* @generated "UML a JPA (com.ibm.xtools.transform.uml2.ejb3.java.jpa.internal.UML2JPATransform)"
+	*/
+	public Set<TCompra> BuscarTodasCompraCliente(int id_Cliente);
+
+	public int cerrarCompra(TCompra compra);
+
+	public int realizarDevolucion(TCompra compra);
+
+	public TCompra buscarCompra(int id_Compra);
+
+	public List<TCompra> buscarTodasCompras();
+
+}

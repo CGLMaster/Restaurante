@@ -1,0 +1,94 @@
+package Integración.Compra;
+
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
+
+import Negocio.Compra.TCarrito;
+import Negocio.Compra.TCompra;
+import Negocio.Compra.TLineaDeCompra;
+import Negocio.Producto.TProdNoPerecedero;
+import Negocio.Producto.TProducto;
+import Negocio.Transaction.Transaction;
+import Negocio.Transaction.TransactionManager;
+
+public class pruebas {
+
+	public static void main(String[] args) {
+		
+		DAOCompra daoCompra = new DAOCompraImp();
+		DAOProductoCompra daoProductoCompra = new DAOProductoCompraImp();
+		int res;
+		
+		
+		
+		try{
+			TransactionManager transactionManager = TransactionManager.getInstance();
+			Transaction transaccion = transactionManager.nuevaTransaccion();
+			transaccion.start();
+			
+			//CERRAR COMPRA
+			/*TCompra compra = new TCompra();
+			compra.setFecha(LocalDate.now());
+			compra.setIdCliente(1);
+			compra.setIdTrabajador(4);
+			compra.setPrecioTotal((float)500.59);
+			
+			List<TLineaDeCompra> lineasDeCompra = new ArrayList<TLineaDeCompra>();
+			lineasDeCompra.add(new TLineaDeCompra(9,10));
+			lineasDeCompra.add(new TLineaDeCompra(10,5));
+			lineasDeCompra.add(new TLineaDeCompra(14,3));
+			
+			TCarrito carrito = new TCarrito();
+			carrito.setCompra(compra);
+			carrito.setLineaDeCompra(lineasDeCompra);
+			
+			res = daoCompra.CerrarCompra(carrito);*/
+			
+
+			//REALIZAR DEVOLUCION (ELIMINAR COMPRA SUPONGO)
+			//res = daoCompra.RealizarDevolucion(4);
+			
+
+			//BUSCAR COMPRA
+			//TCompra compra = daoCompra.BuscarCompra(6);
+			
+
+			//BUSCAR TODAS COMPRAS
+			//List<TCompra> compras = daoCompra.BuscarTodasCompras();
+
+			
+			//BUSCAR TODAS COMPRAS CLIENTE
+			List<TCompra> comprasCliente = daoCompra.BuscarTodasCompraCliente(1);
+			
+			
+
+			
+			//System.out.println(res);
+			
+			
+			
+			//MODIFICAR PRODUCTO
+			//daoProductoCompra.ModificarProductoCompra(14, 6, 25);
+
+			//ELIMINAR PRODUCTO
+			//daoProductoCompra.EliminarProductoCompra(6, 9);
+
+			//LEER LINEA
+			//TLineaDeCompra lineaDeCompra = daoProductoCompra.LeerLinea(6, 16);
+
+			//LEER TODAS LINEAS
+			List<TLineaDeCompra> lineasDeCompra = daoProductoCompra.LeerTodasLineas(5);
+			
+			transaccion.commit();
+		}
+		catch(Exception e){
+			e.printStackTrace();
+		}
+		
+		
+
+
+	}
+
+}

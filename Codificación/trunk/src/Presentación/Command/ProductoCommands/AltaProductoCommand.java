@@ -1,0 +1,25 @@
+package Presentación.Command.ProductoCommands;
+
+import Negocio.FactoriaNegocio.FactoriaSA;
+import Negocio.Producto.TProducto;
+import Presentación.Command.Command;
+import Presentación.Command.Context;
+import Presentación.Controller.Eventos;
+
+public class AltaProductoCommand implements Command{
+
+	@Override
+	public Context executeCommand(Object datos) {
+		int res = FactoriaSA.getInstance().getSAProducto().altaProducto((TProducto) datos);
+		Context resContext;
+		
+		if(res >= 0){
+			resContext = new Context(Eventos.RES_ALTA_PRODUCTO_OK, res);
+		}else{
+			resContext = new Context(Eventos.RES_ALTA_PRODUCTO_KO, res);
+		}
+		
+		return resContext;
+	}
+
+}

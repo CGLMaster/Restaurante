@@ -1,0 +1,177 @@
+package Negocio.Trabajador;
+
+import java.util.List;
+
+import Integración.FactoriaIntegracion.FactoriaIntegracion;
+import Integración.Trabajador.DAOTrabajador;
+import Negocio.Transaction.Transaction;
+import Negocio.Transaction.TransactionManager;
+
+public class SATrabajadorImp implements SATrabajador {
+
+	DAOTrabajador daoTrabajador;
+
+	public SATrabajadorImp() {
+		daoTrabajador = FactoriaIntegracion.getInstance().getDAOTrabajador(); // ta bien?
+	}
+
+	public int altaTrabajador(TTrabajador trabajador) {
+		if (trabajador.getNombre().trim().length() == 0) {
+			return -1;
+		}
+		if (!validarDNI(trabajador.getDNI())) {
+			return -1;
+		}
+
+		try {
+			TransactionManager transactionManager = TransactionManager.getInstance();
+			Transaction transaccion = transactionManager.nuevaTransaccion();
+			transaccion.start();
+
+			int res = -1;
+			TTrabajador trab = daoTrabajador.buscarDatosTrabajadorDNI(trabajador.getDNI());
+
+			if (trab == null) {
+				res = daoTrabajador.altaTrabajador(trabajador);
+			} else if (!trab.getActivo()) {
+				res = daoTrabajador.reactivar(trab.getIDTrabajador());
+				trabajador.setId(trab.getIDTrabajador());
+				res = daoTrabajador.modificarTrabajador(trabajador);
+			}
+
+			if (res == -1)
+				transaccion.rollback();
+			else
+				transaccion.commit();
+
+			return res;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return -1;
+		}
+
+	}
+
+	public int eliminarTrabajador(int ID) {
+		try {
+
+			Transaction transaccion;
+			transaccion = TransactionManager.getInstance().nuevaTransaccion();
+			transaccion.start();
+
+			int res = -1;
+
+			TTrabajador trabajador = daoTrabajador.buscarDatosTrabajadorID(ID);
+			if (trabajador != null && trabajador.getActivo() == true) {
+				res = daoTrabajador.bajaTrabajador(ID);
+			}
+
+			if (res == -1)
+				transaccion.rollback();
+			else
+				transaccion.commit();
+
+			return res;
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			return -1;
+		}
+	}
+
+	public int modificarDatosTrabajador(TTrabajador trabajadorDatosNuevos) {
+		if (trabajadorDatosNuevos.getNombre().trim().length() == 0) {
+			return -1;
+		}
+
+		if (!validarDNI(trabajadorDatosNuevos.getDNI())) {
+			return -1;
+		}
+
+		try {
+			Transaction transaccion;
+			transaccion = TransactionManager.getInstance().nuevaTransaccion();
+			transaccion.start();
+
+			int res = -1;
+
+			TTrabajador trabajadorAModificar = daoTrabajador
+					.buscarDatosTrabajadorID(trabajadorDatosNuevos.getIDTrabajador());
+
+			if (trabajadorAModificar == null) {
+				transaccion.rollback();
+				return -1;
+			}
+
+			TTrabajador trabajadorConMismoDNI = daoTrabajador.buscarDatosTrabajadorDNI(trabajadorDatosNuevos.getDNI());
+			if (trabajadorConMismoDNI != null
+					&& trabajadorConMismoDNI.getIDTrabajador() != trabajadorDatosNuevos.getIDTrabajador()) { 
+				transaccion.rollback();
+				return -1;
+			}
+
+			res = daoTrabajador.modificarTrabajador(trabajadorDatosNuevos);
+
+			if (res == -1)
+				transaccion.rollback();
+			else
+				transaccion.commit();
+
+			return res;
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			return -1;
+		}
+
+	}
+
+	public TTrabajador identificarTrabajador(int ID) {
+
+		TTrabajador trabajador = daoTrabajador.buscarDatosTrabajadorID(ID);
+		if (trabajador != null && trabajador.getActivo()) {
+			return trabajador;
+		}
+		return null;
+	}
+
+	public List<TTrabajador> buscarTodosTrabajadores() {
+
+		return daoTrabajador.buscarTodosTrabajador();
+	}
+
+	public TTrabajador buscarDatosTrabajadorPorID(int ID) {
+
+		return daoTrabajador.buscarDatosTrabajadorID(ID);
+	}
+
+	public TTrabajador buscarDatosTrabajadorPorDNI(String DNI) {
+
+		return daoTrabajador.buscarDatosTrabajadorDNI(DNI);
+	}
+
+	public boolean validarDNI(String DNI) {
+		boolean ok = false;
+
+		if (DNI.length() == 9) {
+			ok = true;
+			String nums = DNI.substring(0, 8);
+			try {
+				Integer.parseInt(nums);
+			} catch (NumberFormatException e) {
+				ok = false;
+			}
+
+			if (ok) {
+				nums = DNI.substring(8);
+				try {
+					Integer.parseInt(nums);
+					ok = false;
+				} catch (NumberFormatException e) {
+				}
+			}
+		}
+
+		return ok;
+	}
+}

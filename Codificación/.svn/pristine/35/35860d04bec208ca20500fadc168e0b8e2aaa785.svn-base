@@ -1,0 +1,22 @@
+package Integración.Seccion;
+
+import Negocio.Seccion.TSeccion;
+
+import java.util.List;
+
+public interface DAOSeccion {
+
+	public int altaSeccion(TSeccion seccion);
+
+	public TSeccion buscarSeccion(int id);
+
+	public List<TSeccion> buscarTodosSeccion();
+
+	public int modificarSeccion(TSeccion seccion);
+
+	public int bajaSeccion(int id);
+
+	public int reactivar(int id_pasillo);
+
+	public int buscarSeccionPorZonaPasillo(String zona, int pasillo);
+}

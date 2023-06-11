@@ -1,0 +1,154 @@
+package Presentación.Cliente;
+
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.Image;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.Box;
+import javax.swing.BoxLayout;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.border.EmptyBorder;
+
+import Negocio.Cliente.TCliente;
+import Negocio.Cliente.TClienteNoPremium;
+import Negocio.Cliente.TClientePremium;
+import Presentación.Command.Context;
+import Presentación.Controller.Controller;
+import Presentación.Controller.Eventos;
+import Presentación.FactoriaVistas.IGUI;
+
+@SuppressWarnings("serial")
+public class VBajaCliente extends JFrame implements IGUI {
+	TCliente cliente;
+	
+	public VBajaCliente(TCliente cl){
+		cliente = cl;
+		init_GUI();
+	}
+	
+	public void init_GUI(){
+	
+		this.setLocation(getParent().getLocation().x + 100, getParent().getLocation().y + 100);
+		this.setTitle("Eliminar Cliente");
+		JPanel mainPanel = new JPanel();
+		mainPanel.setLayout(new BoxLayout(mainPanel,BoxLayout.Y_AXIS));
+		mainPanel.setPreferredSize(new Dimension(500,300));
+		mainPanel.setBorder(new EmptyBorder(20, 20, 20, 20));
+				
+		// TITULO
+		JLabel titleLabel = new JLabel("¿Desea eliminar el cliente con la siguiente informacion?");
+		titleLabel.setAlignmentX(CENTER_ALIGNMENT);
+		titleLabel.setFont(new Font(titleLabel.getFont().getName(), Font.PLAIN, 15));
+		
+		// CONTENT CONTAINER
+		JPanel contentContainer = new JPanel();
+		contentContainer.setLayout(new BoxLayout(contentContainer, BoxLayout.Y_AXIS));
+		contentContainer.setAlignmentX(CENTER_ALIGNMENT);
+		contentContainer.setBorder(new EmptyBorder(20, 20, 20, 20));
+		contentContainer.setBackground(Color.white);
+		
+		// INFO
+		JLabel idLabel = new JLabel("ID: " + cliente.getIDSocio());
+		JLabel nombreLabel = new JLabel("Nombre: " + cliente.getNombre());
+		JLabel mailLabel = new JLabel("Mail: " + cliente.getMail());
+		JLabel dniLabel = new JLabel("DNI: " + cliente.getDNI());
+		
+		contentContainer.add(idLabel);
+		contentContainer.add(Box.createRigidArea(new Dimension(0, 10)));
+		contentContainer.add(nombreLabel);
+		contentContainer.add(Box.createRigidArea(new Dimension(0, 10)));
+		contentContainer.add(dniLabel);
+		contentContainer.add(Box.createRigidArea(new Dimension(0, 10)));
+		contentContainer.add(mailLabel);
+		contentContainer.add(Box.createRigidArea(new Dimension(0, 10)));
+		if(cliente instanceof TClientePremium){
+			TClientePremium clienteP = (TClientePremium) cliente;
+			JLabel antiguedadLabel = new JLabel("Antiguedad: " + clienteP.getAntiguedad());
+			JLabel telefonoLabel = new JLabel("Telefono: " + clienteP.getTelefono());
+			JLabel direccionLabel = new JLabel("Direccion: " + clienteP.getDireccion());
+			contentContainer.add(antiguedadLabel);
+			contentContainer.add(Box.createRigidArea(new Dimension(0, 10)));
+			contentContainer.add(telefonoLabel);
+			contentContainer.add(Box.createRigidArea(new Dimension(0, 10)));
+			contentContainer.add(direccionLabel);
+			contentContainer.add(Box.createRigidArea(new Dimension(0, 10)));
+		}else if (cliente instanceof TClienteNoPremium) {
+			TClienteNoPremium clienteNP = (TClienteNoPremium) cliente;
+			JLabel nComprasLabel = new JLabel("Cantidad de compras realizadas: " + clienteNP.getNumCompras());
+			contentContainer.add(nComprasLabel);
+			contentContainer.add(Box.createRigidArea(new Dimension(0, 10)));
+		}
+		contentContainer.add(Box.createRigidArea(new Dimension(0, 10)));
+		
+		// CONSTRUIR VISTAS
+		mainPanel.add(titleLabel);
+		mainPanel.add(Box.createRigidArea(new Dimension(0, 20)));
+		mainPanel.add(contentContainer);
+		
+		// BOTONES
+		JButton yesButton = new JButton("YES");
+		JButton noButton = new JButton("NO");
+		yesButton.setBackground(new Color(39, 174, 95));
+		yesButton.setForeground(Color.white);
+		yesButton.setBorderPainted(false);
+			
+		noButton.setBackground(new Color(236, 115, 115));
+		noButton.setForeground(Color.white);
+		noButton.setBorderPainted(false);
+			
+		noButton.addActionListener(new ActionListener(){
+
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					Controller.getInstance().action(new Context(Eventos.BUSCAR_TODOS_CLIENTE));
+					dispose();
+				}
+				
+			});
+			
+			
+		yesButton.addActionListener(new ActionListener(){
+
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					Controller.getInstance().action(new Context(Eventos.BAJA_CLIENTE, cliente.getIDSocio()));
+					dispose();
+				}
+				
+			});
+		JPanel buttonsPanel = new JPanel();
+		buttonsPanel.setLayout(new BoxLayout(buttonsPanel,BoxLayout.X_AXIS));
+		buttonsPanel.add(Box.createRigidArea(new Dimension(0, 10)));
+		buttonsPanel.add(yesButton);
+		buttonsPanel.add(Box.createRigidArea(new Dimension(10, 0)));
+		buttonsPanel.add(noButton);
+		
+		this.add(mainPanel);
+		mainPanel.add(buttonsPanel);
+		Image iconFrame = new ImageIcon(getClass().getClassLoader().getResource("icono2.png")).getImage();
+		this.setIconImage(iconFrame);
+		this.pack();
+		this.setVisible(true);
+	}
+
+	@Override
+	public void actualizar(Context res) {
+		if(res.getEvento() == Eventos.RES_BAJA_CLIENTE_OK ){
+			JOptionPane.showMessageDialog(null, "Cliente borrado correctamente");
+			
+		}
+		else if(res.getEvento() == Eventos.RES_BAJA_CLIENTE_KO){
+			JOptionPane.showMessageDialog(null, "No se ha podido borrar cliente");
+		}
+		Controller.getInstance().action(new Context(Eventos.BUSCAR_TODOS_CLIENTE));
+		dispose();
+	}
+}

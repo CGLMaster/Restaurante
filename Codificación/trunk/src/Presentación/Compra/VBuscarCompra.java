@@ -1,0 +1,210 @@
+package Presentación.Compra;
+
+import javax.swing.Box;
+import javax.swing.BoxLayout;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.border.EmptyBorder;
+
+import Negocio.Compra.TCompra;
+import Negocio.Compra.TCompraConProductos;
+import Negocio.Compra.TLineaDeCompra;
+import Presentación.Command.Context;
+import Presentación.Controller.Controller;
+import Presentación.Controller.Eventos;
+import Presentación.FactoriaVistas.IGUI;
+
+import Negocio.Producto.TProducto;
+
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
+import java.awt.Font;
+import java.awt.Image;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.List;
+
+@SuppressWarnings("serial")
+public class VBuscarCompra extends JFrame implements IGUI {
+
+	private TCompraConProductos compraConProductos;
+	private List<TProducto> productos;
+
+	public VBuscarCompra(TCompraConProductos tCompraConProductos) {
+		this.compraConProductos = tCompraConProductos;
+		this.productos = tCompraConProductos.getProductos();
+		init_GUI();
+		this.setLocationRelativeTo(null);
+	}
+
+	public void init_GUI() {
+		this.setPreferredSize(new Dimension(1150, 750));
+		this.setLocation(400, 100);
+
+		Image iconFrame = new ImageIcon(getClass().getClassLoader().getResource("icono2.png")).getImage();
+		this.setIconImage(iconFrame);
+
+		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+		JPanel mainPanel = new JPanel();
+		mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
+		mainPanel.setPreferredSize(new Dimension(500, 500));
+
+		// CONTENT CONTAINER
+		JPanel contentContainer = new JPanel();
+		contentContainer.setLayout(new BoxLayout(contentContainer, BoxLayout.Y_AXIS));
+		contentContainer.setAlignmentX(CENTER_ALIGNMENT);
+		contentContainer.setAutoscrolls(true);
+
+		// BACKBUTTON CONTAINER
+		JPanel backButtonContainer = backButtonContainer();
+
+		// HEADER
+		JPanel headerContainer = new JPanel();
+		headerContainer.setLayout(new BoxLayout(headerContainer, BoxLayout.X_AXIS));
+		headerContainer.setMaximumSize(new Dimension(1200, 100));
+		headerContainer.setBackground(new Color(39, 174, 95));
+		headerContainer.add(Box.createRigidArea(new Dimension(30, 0)));
+
+		// TITLE
+		JLabel title = new JLabel("Compras");
+		title.setFont(new Font(title.getFont().getName(), Font.PLAIN, 25));
+		title.setAlignmentX(CENTER_ALIGNMENT);
+		title.setForeground(Color.white);
+		title.setFont(new Font("sans-serif", 1, 20));
+		headerContainer.add(title);
+		headerContainer.add(Box.createRigidArea(new Dimension(350, 0)));
+
+		// CONTENT CONTAINER
+		JPanel infoContainer = new JPanel();
+		infoContainer.setLayout(new BoxLayout(infoContainer, BoxLayout.Y_AXIS));
+		infoContainer.setAlignmentX(CENTER_ALIGNMENT);
+		infoContainer.setBorder(new EmptyBorder(20, 20, 20, 20));
+		infoContainer.setBackground(Color.white);
+
+		// INFO
+		TCompra compra = compraConProductos.getCompra();
+
+		JLabel idLabel = new JLabel("ID: " + compra.getIDCompra());
+		JLabel idCliente = new JLabel("ID Cliente: " + compra.getIdCliente());
+		JLabel idTrabajador = new JLabel("ID Trabajador: " + compra.getIdTrabajador());
+		JLabel precioTotal = new JLabel("Precio Total: " + compra.getPrecioTotal());
+		JLabel fecha = new JLabel("Fecha: " + compra.getFecha());
+
+		JLabel productosTitle = new JLabel("PRODUCTOS");
+		productosTitle.setAlignmentX(CENTER_ALIGNMENT);
+
+		// CONSTRUIR VISTA
+		this.add(mainPanel);
+		JScrollPane scrollFrame = new JScrollPane(contentContainer);
+		mainPanel.add(scrollFrame);
+
+		contentContainer.add(headerContainer);
+
+		contentContainer.add(Box.createRigidArea(new Dimension(0, 10)));
+		contentContainer.add(backButtonContainer);
+
+		// HELP
+		JPanel helpPanel = new JPanel();
+		JLabel help = new JLabel("Haga click en una compra para mostrar mas informacion");
+		helpPanel.setMaximumSize(new Dimension(1000, 40));
+		helpPanel.add(help);
+
+		// COMPRATOTAL INFO
+		contentContainer.add(infoContainer);
+		infoContainer.add(idLabel);
+		infoContainer.add(Box.createRigidArea(new Dimension(0, 10)));
+		infoContainer.add(idCliente);
+		infoContainer.add(Box.createRigidArea(new Dimension(0, 10)));
+		infoContainer.add(idTrabajador);
+		infoContainer.add(Box.createRigidArea(new Dimension(0, 10)));
+		infoContainer.add(precioTotal);
+		infoContainer.add(Box.createRigidArea(new Dimension(0, 10)));
+		infoContainer.add(fecha);
+		infoContainer.add(Box.createRigidArea(new Dimension(0, 10)));
+
+		contentContainer.add(Box.createRigidArea(new Dimension(0, 20)));
+
+		contentContainer.add(productosTitle);
+
+		contentContainer.add(Box.createRigidArea(new Dimension(0, 5)));
+
+		// PRODUCTOS
+		for (int i = 0; i < productos.size(); i++) {
+
+			TLineaDeCompra productoCantidad = compraConProductos.getLineasDeCompra().get(i);
+			TProducto producto = productos.get(i);
+			contentContainer.add(seccionPanel(producto, productoCantidad));
+			contentContainer.add(Box.createRigidArea(new Dimension(0, 10)));
+		}
+
+		this.pack();
+		this.setVisible(true);
+
+	}
+
+	private JPanel seccionPanel(TProducto producto, TLineaDeCompra linea) {
+
+		JPanel panel = new JPanel(new BorderLayout());
+		panel.setBackground(Color.white);
+		panel.setBorder(new EmptyBorder(10, 10, 10, 10));
+		panel.setMaximumSize(new Dimension(1000, 75));
+
+		//INFO PRODUCTO PANEL
+		JPanel infoProd = new JPanel();
+		JLabel precioTotal = new JLabel(linea.getCantidad() * linea.getPrecio() + " € ");
+		// LABEL
+		JLabel label = new JLabel(String
+				.valueOf(producto.getIDProducto() + ":   " + producto.getNombre() + "   X   " + linea.getCantidad()));
+		infoProd.add(label);
+		infoProd.add(Box.createRigidArea(new Dimension(10, 0)), BorderLayout.WEST);
+		infoProd.add(precioTotal);
+		infoProd.setBackground(Color.white);
+
+		// CONSTRUIR PANEL
+		panel.add(infoProd, BorderLayout.WEST);
+
+		return panel;
+	}
+
+	private JPanel backButtonContainer() {
+
+		JPanel backButtonContainer = new JPanel(new FlowLayout(FlowLayout.LEFT));
+		backButtonContainer.setMaximumSize(new Dimension(1000, 75));
+
+		JButton backButton = new JButton();
+		backButton.setBackground(new Color(237, 237, 237));
+		backButton.setIcon(new ImageIcon((getClass().getClassLoader().getResource("back_icon.png"))));
+		backButton.setToolTipText("Volver a la lista de compras");
+		backButton.setPreferredSize(new Dimension(60, 60));
+		backButton.setBorderPainted(false);
+		backButton.setAlignmentX(LEFT_ALIGNMENT);
+
+		backButton.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+
+				Controller.getInstance().action(new Context(Eventos.BUSCAR_TODOS_COMPRA));
+				dispose();
+			}
+
+		});
+
+		backButtonContainer.add(backButton);
+
+		return backButtonContainer;
+	}
+
+
+	@Override
+	public void actualizar(Context res) {
+
+	}
+}

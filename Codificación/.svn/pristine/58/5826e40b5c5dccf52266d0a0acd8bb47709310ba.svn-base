@@ -1,0 +1,21 @@
+
+package Negocio.FactoriaEntityManager;
+
+import jakarta.persistence.EntityManagerFactory;
+import jakarta.persistence.Persistence;
+import jakarta.persistence.EntityManager;
+
+
+public abstract class FactoriaEntityManager {
+
+	private static FactoriaEntityManager instance;   // Preguntar mañana
+
+	
+	public static FactoriaEntityManager getInstance() {
+		if(instance == null) 
+			instance = new FactoriaEntityManagerImp();
+		return instance;
+	}
+
+	public abstract EntityManager generarEntityManager();
+}

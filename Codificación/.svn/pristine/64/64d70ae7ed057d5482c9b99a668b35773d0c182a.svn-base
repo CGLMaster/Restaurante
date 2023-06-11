@@ -1,0 +1,78 @@
+package Negocio.Compra;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class pruebas {
+
+	public static void main(String[] args) {
+		
+		SACompraImp sa = new SACompraImp();
+		
+		
+		
+		//ABRIR COMPRA
+		TCarrito carrito = sa.abrirCompra(25);
+
+		//CERRAR COMPRA
+
+
+		//AÑADIR PRODUCTO
+		/*TLineaDeCompra lineaDeCompra1 = new TLineaDeCompra(1, 5);
+		TLineaDeCompra lineaDeCompra2 = new TLineaDeCompra(3, 6);
+		
+
+		sa.aniadirProducto(lineaDeCompra1, carrito);
+		sa.aniadirProducto(lineaDeCompra2, carrito);
+		sa.aniadirProducto(lineaDeCompra1, carrito);*/
+
+		//ELIMINAR PRODUCTO
+		/*TLineaDeCompra lineaDeCompra1 = new TLineaDeCompra(1, 5);
+		TLineaDeCompra lineaDeCompra2 = new TLineaDeCompra(3, 6);
+		
+
+		sa.aniadirProducto(lineaDeCompra1, carrito);
+		sa.aniadirProducto(lineaDeCompra2, carrito);
+		sa.aniadirProducto(lineaDeCompra1, carrito);
+		
+		sa.eliminarProducto(3, carrito);*/
+
+
+		//BUSCAR COMPRA
+		//TCompraConProductos compraConProductos = sa.buscarPorIDCompra(5);
+
+
+		//BUSCAR TODAS LAS COMPRAS
+		//List<TCompra> compras = sa.buscarTodosCompra();
+
+		//DEVOLVER PRODUCTO
+		/*TLineaDeCompra prods_devolucion = new TLineaDeCompra(8, 1);
+		prods_devolucion.setID_Compra(2);
+		
+		int res = sa.devolverProducto(prods_devolucion);*/
+
+
+		//VALIDAR CARRITO
+		/*TLineaDeCompra lineaDeCompra1 = new TLineaDeCompra(9, 5);
+		TLineaDeCompra lineaDeCompra2 = new TLineaDeCompra(14, 10);
+		
+
+		sa.aniadirProducto(lineaDeCompra1, carrito);
+		sa.aniadirProducto(lineaDeCompra2, carrito);
+		sa.aniadirProducto(lineaDeCompra1, carrito);
+		
+		int res = sa.validarCarrito(carrito);
+		
+		System.out.println(res);*/
+
+
+		//ELIMINAR COMPRA
+		//int res = sa.eliminarCompra(3);
+		
+		
+		System.out.println("a");
+		
+		
+	}
+
+}

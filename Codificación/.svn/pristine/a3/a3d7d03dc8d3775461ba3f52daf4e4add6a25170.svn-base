@@ -1,0 +1,28 @@
+/**
+ * 
+ */
+package Integración.Compra;
+
+import Negocio.Producto.TProducto;
+import Negocio.Compra.TLineaDeCompra;
+
+import java.util.List;
+
+
+
+public interface DAOProductoCompra {
+	
+	public int AñadirProductoCompra(int id_Compra, int cantidadProducto, TProducto producto);
+
+	
+	public int ModificarProductoCompra(int idProducto, int idCompra, int cantidad);
+
+	
+	public int EliminarProductoCompra(int idCompra, int idProducto);
+
+	
+	public TLineaDeCompra LeerLinea(int id_Compra, int id_Producto);
+
+	
+	public List<TLineaDeCompra> LeerTodasLineas(int idCompra);
+}

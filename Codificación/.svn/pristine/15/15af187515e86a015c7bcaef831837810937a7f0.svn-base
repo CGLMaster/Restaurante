@@ -1,0 +1,41 @@
+package Integración.Producto;
+
+import java.util.List;
+import Negocio.Producto.TProducto;
+
+public interface DAOProducto {
+
+	/** 
+	* <!-- begin-UML-doc -->
+	* <!-- end-UML-doc -->
+	* @param id_marca
+	* @return
+	* @generated "UML a JPA (com.ibm.xtools.transform.uml2.ejb3.java.jpa.internal.UML2JPATransform)"
+	*/
+	public Set<TProducto> buscarProductosPorMarca(int id_marca);
+
+	public int altaProducto(TProducto p);
+
+	/** 
+	* <!-- begin-UML-doc -->
+	* <!-- end-UML-doc -->
+	* @param prod
+	* @return
+	* @generated "UML a JPA (com.ibm.xtools.transform.uml2.ejb3.java.jpa.internal.UML2JPATransform)"
+	*/
+	public int bajaProducto(TProducto prod);
+
+	public int bajaProducto(int prod);
+
+	public int modificarProducto(TProducto prod);
+
+	public TProducto buscarProducto(int id);
+
+	public List<TProducto> buscarTodosProducto();
+
+	public int reactivar(int id_producto);
+
+	public TProducto buscarProductoPorMarcayNombre(String nombre_prod, int id_marca);
+
+	public int reducirStock(int ID_Producto, int cantidad);
+}

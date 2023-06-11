@@ -1,0 +1,18 @@
+package Integración.Producto;
+
+import Negocio.Producto.TDistribuye;
+
+import java.util.List;
+
+public interface DAODistribuye {
+
+	public int vincularProductoProveedor(TDistribuye vinculo);
+
+	public int desvincularProductoProveedor(TDistribuye vinculo);
+
+	public List<TDistribuye> buscarTodosVinculosProducto(int id_producto);
+	
+	public List<TDistribuye> buscarTodosVinculosProveedor(int id_proveedor);
+
+	public TDistribuye buscarVinculoProducto(int id_producto, int id_proveedor);
+}

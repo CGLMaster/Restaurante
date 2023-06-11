@@ -1,0 +1,40 @@
+package Integración.Cliente;
+
+import java.util.List;
+
+import Negocio.Cliente.TCliente;
+
+public interface DAOCliente {
+
+	public int altaCliente(TCliente cliente);
+
+	public int bajaCliente(int id);
+
+	public int modificarCliente(TCliente cliente);
+
+	/** 
+	* <!-- begin-UML-doc -->
+	* <!-- end-UML-doc -->
+	* @param id
+	* @return
+	* @generated "UML a JPA (com.ibm.xtools.transform.uml2.ejb3.java.jpa.internal.UML2JPATransform)"
+	*/
+	public TCliente buscarUnCliente(String id);
+
+	/** 
+	* <!-- begin-UML-doc -->
+	* <!-- end-UML-doc -->
+	* @param dni
+	* @return
+	* @generated "UML a JPA (com.ibm.xtools.transform.uml2.ejb3.java.jpa.internal.UML2JPATransform)"
+	*/
+	public TCliente buscarClientePorDNI(String dni);
+
+	public TCliente buscarUnCliente(int id);
+
+	public List<TCliente> buscarTodosCliente();
+
+	public int reactivar(int id_cliente);
+
+	public int buscarUnClientePorDni(String dni);
+}

@@ -1,0 +1,111 @@
+/**
+ * 
+ */
+package Negocio.Ingrediente;
+
+import jakarta.persistence.Entity;
+import java.io.Serializable;
+import jakarta.persistence.Id;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.NamedQuery;
+import jakarta.persistence.NamedQueries;
+import java.util.Set;
+import Negocio.Plato.Plato;
+import jakarta.annotation.Generated;
+import jakarta.persistence.NamedNativeQuery;
+
+import jakarta.persistence.ManyToMany;
+
+
+@Entity
+@NamedQueries({
+		@NamedQuery(name = "Negocio.Ingrediente.Ingrediente.findByid", query = "select obj from Ingrediente obj where :id = obj.id "),
+		@NamedQuery(name = "Negocio.Ingrediente.Ingrediente.findBynombre", query = "select obj from Ingrediente obj where :nombre = obj.nombre "),
+		@NamedQuery(name = "Negocio.Ingrediente.Ingrediente.findBycalorias", query = "select obj from Ingrediente obj where :calorias = obj.calorias "),
+		@NamedQuery(name = "Negocio.Ingrediente.Ingrediente.findByactivo", query = "select obj from Ingrediente obj where :activo = obj.activo "),
+		@NamedQuery(name = "Negocio.Ingrediente.Ingrediente.findByplato", query = "select obj from Ingrediente obj where :plato MEMBER OF obj.plato ") })
+public class Ingrediente implements Serializable {
+	
+	private static final long serialVersionUID = 0;
+	
+	///@Generated(strategy = Generated.IDENTITY)
+	@jakarta.persistence.Id
+	private int id;
+	
+	private String nombre;
+
+	private float calorias;
+	
+	private Boolean activo;
+	
+	@jakarta.persistence.ManyToMany(mappedBy = "ingrediente")
+	private Set<Plato> plato;
+	
+	public Ingrediente() {
+		
+	}
+
+	public Ingrediente(int id, String nombre, int calorias, Boolean activo, Set<Plato> plato) {
+		this.id = id;
+		this.nombre = nombre;
+		this.calorias = calorias;
+		this.activo = activo;
+		this.plato = plato;
+	}
+
+
+
+	public int getId() {
+		return id;
+	}
+
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+
+	public Boolean isActivo() {
+		return activo;
+	}
+
+
+	public void setActivo(Boolean activo) {
+		this.activo = activo;
+	}
+
+
+	public String getNombre() {
+		return nombre;
+	}
+
+	
+	public void setNombre(String nombre) {
+		this.nombre = nombre;
+	}
+
+	
+	public float getCalorias() {
+		
+		return calorias;
+		
+	}
+
+	
+	public Set<Plato> getPlatos() {
+		return plato;
+	}
+
+	public void setCalorias(int calorias) {
+		this.calorias = calorias;
+	}
+
+	
+	public void transferToEntity(TIngrediente ingrediente) {
+		this.setCalorias(ingrediente.getCalorias());
+		this.setId(ingrediente.getID());
+		this.setNombre(ingrediente.getNombre());
+		this.setActivo(ingrediente.isActivo());
+	}
+}

@@ -1,0 +1,269 @@
+package Negocio.Compra;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import Integración.Cliente.DAOClienteImp;
+import Integración.Compra.DAOCompra;
+import Integración.Compra.DAOProductoCompra;
+import Integración.FactoriaIntegracion.FactoriaIntegracion;
+import Integración.Producto.DAOProducto;
+import Integración.Trabajador.DAOTrabajador;
+import Negocio.Cliente.TCliente;
+import Negocio.Producto.TProducto;
+import Negocio.Trabajador.TTrabajador;
+import Negocio.Transaction.Transaction;
+import Negocio.Transaction.TransactionManager;
+import Presentación.Controller.Eventos;
+
+public class SACompraImp implements SACompra {
+	
+	DAOCompra daoCompra;
+	
+	public SACompraImp(){
+		daoCompra = FactoriaIntegracion.getInstance().getDAOCompra();
+	}
+	
+	public TCarrito abrirCompra(int id_trabajador) {
+
+		TCarrito carrito = new TCarrito();
+		carrito.getCompra().setIdTrabajador(id_trabajador);
+		
+		return carrito;
+	}
+
+	public int cerrarCompra(int id_trabajador, TCarrito carrito) {
+		DAOClienteImp daoClientes = (DAOClienteImp) FactoriaIntegracion.getInstance().getDAOCliente(); // What porque casteo
+	    DAOTrabajador daoTrabajadores = FactoriaIntegracion.getInstance().getDAOTrabajador();
+	    DAOProducto daoProductos = FactoriaIntegracion.getInstance().getDAOProducto();
+
+	    TCompra compra = carrito.getCompra();
+
+	    // Comprobar que el cliente existe y está activo
+	    TCliente cliente = daoClientes.buscarUnCliente(id_trabajador);
+	    if(cliente == null || !cliente.getEsActivo()) return Eventos.RES_BUSCAR_TRABAJADOR_ID_KO;
+
+	    // Comprobar que el trabajador existe y está activo
+	    if(compra.getIdTrabajador() != -1){
+	    	TTrabajador trabajador = daoTrabajadores.buscarDatosTrabajadorID(id_trabajador);
+		    if(trabajador == null || !trabajador.getActivo()) return Eventos.RES_BUSCAR_TRABAJADOR_ID_KO;
+	    }
+	    
+	    int res = validarCarrito(carrito);;
+	    if(res != 0){
+	    	return res;
+	    }
+
+	    // Comprobar que el precio pagado no sea menor que el total
+	    if(compra.getPrecioTotal() == -1) compra.setPrecioPagado(carrito.getCompra().getPrecioTotal()); //Cuando se paga con tarjeta, el precio es automatico
+	    if(compra.getPrecioTotal() < carrito.getCompra().getPrecioTotal()) return Eventos.PRECIO_PAGADO_INSUFICIENTE;
+
+	    //Insertar compra en base de datos
+	   // int idCompra = daoCompra.pagarCompra(carrito); Como caraios saco el id
+
+	    List<TLineaDeCompra> lineaDeCompra = carrito.getLineaDeCompra();
+	    for(TLineaDeCompra linea : lineaDeCompra){
+	    	
+	    	lineaDeCompra.setIdCompra(idCompra);
+
+	        DAOProductoCompra daoProductoCompra;
+			// Insertar producto en linea de compra
+	        daoProductoCompra.AñadirProductoCompra(id_Compra, lineaDeCompra.getCantidad(), lineaDeCompra.getIDProducto());
+
+	        // Reducir stock de producto
+	        if(lineaDeCompra.getCantidad() < 0)
+	        	daoProductoCompra.EliminarProductoCompra(idCompra, lineaDeCompra.getIDProducto());
+	        else 
+	        	daoProductoCompra.ModificarProductoCompra(lineaDeCompra.getIDProducto(), idCompra, lineaDeCompra.getCantidad())
+	    }
+	    
+	    return Eventos.RES_PAGAR_COMPRA_OK;
+	}
+
+
+	public int aniadirProducto(TLineaDeCompra lineaDeCompra, TCarrito carrito) {
+		
+		if(lineaDeCompra.getCantidad() > 0){
+			
+			boolean producto_ya_esta_en_carrito = false;
+			int i_lineaDeCompra = 0;
+			
+			for(int i = 0; i < carrito.getLineaDeCompra().size(); i++){
+				if(carrito.getLineaDeCompra().get(i).getIDProducto() == lineaDeCompra.getIDProducto()){
+					producto_ya_esta_en_carrito = true;
+					i_lineaDeCompra = i;
+				}
+			}
+			
+			if(producto_ya_esta_en_carrito){
+				int nuevaCantidad = carrito.getLineaDeCompra().get(i_lineaDeCompra).getCantidad() + lineaDeCompra.getCantidad();
+				carrito.getLineaDeCompra().get(i_lineaDeCompra).setCantidad(nuevaCantidad);
+			}
+			else{
+				carrito.getLineaDeCompra().add(lineaDeCompra);
+			}
+			
+			return 1;
+		}
+		else{
+			return -1;
+		}
+		
+	}
+
+	public int eliminarProducto(int id_producto, TCarrito carrito) {
+		
+			int i_producto = 0;
+			boolean producto_esta_en_carrito = false;
+			
+			for(int i = 0; i < carrito.getLineaDeCompra().size(); i++){
+				if(carrito.getLineaDeCompra().get(i).getIDProducto() == id_producto){
+					producto_esta_en_carrito = true;
+					i_producto = i;
+				}
+			}
+			
+			if(producto_esta_en_carrito){
+				carrito.getLineaDeCompra().remove(i_producto);
+				return 1;
+			}
+			else{
+				return -1;
+			}
+
+	}
+
+	
+	public TCompraConProductos buscarPorIDCompra(int id_compra) {
+		TCompra compra = daoCompra.BuscarCompra(id_compra);
+		if(compra==null)
+			return null;
+		
+		List<TLineaDeCompra> lineasDeCompra = FactoriaIntegracion.getInstance().getDAOProductoCompra().LeerTodasLineas(id_compra);
+		List<TProducto> listaProductos = new ArrayList<TProducto>();
+		
+		for (TLineaDeCompra lineaDeCompra : lineasDeCompra) {
+			listaProductos.add(FactoriaIntegracion.getInstance().getDAOProducto().buscarProducto(lineaDeCompra.getIDProducto()));
+		}
+		
+		return new TCompraConProductos(listaProductos, compra, lineasDeCompra);
+	}
+
+	public List<TCompra> buscarTodosCompra() {
+		return daoCompra.BuscarTodasCompras();
+	}
+
+	public int devolverProducto(TLineaDeCompra prods_devolucion) {
+		
+		int id_producto = prods_devolucion.getIDProducto();
+		int id_compra = prods_devolucion.getID_Compra();
+		int cantidad_a_devolver = prods_devolucion.getCantidad();
+
+		
+		//comprobar que la compra existe
+		if(daoCompra.BuscarCompra(id_compra) == null){
+			return -1;
+		}
+		
+		//comprobar que la cantidad que vamos a devolver tenga sentido
+		if(cantidad_a_devolver <= 0){
+			return -1;
+		}
+		
+
+		DAOProductoCompra daoProductoCompra = FactoriaIntegracion.getInstance().getDAOProductoCompra();
+	
+		
+		try{
+			TransactionManager transactionManager = TransactionManager.getInstance();
+			Transaction transaccion = transactionManager.nuevaTransaccion();
+			transaccion.start();
+			
+			TLineaDeCompra lineaDeCompraAModificar = daoProductoCompra.LeerLinea(id_compra, id_producto);
+			if(lineaDeCompraAModificar == null){
+				transaccion.rollback();
+				return -1;
+			}
+			
+			
+			int nueva_cantidad;
+			
+			if(cantidad_a_devolver > lineaDeCompraAModificar.getCantidad()){
+				nueva_cantidad = 0;
+			}
+			else{
+				nueva_cantidad = lineaDeCompraAModificar.getCantidad() - cantidad_a_devolver;
+			}
+			
+			//llamar al dao para actualizar la linea de compra en la base de datos
+			int res = daoProductoCompra.ModificarProductoCompra(id_producto, id_compra, nueva_cantidad);
+			
+			if (res == -1)
+				transaccion.rollback();
+			else
+				transaccion.commit();
+			
+		}
+		catch(Exception e){
+			e.printStackTrace();
+			return -1;
+		}
+		
+		
+
+		return 0;
+	}
+	
+	public int validarCarrito(TCarrito carrito){
+		List<TLineaDeCompra> productosCantidad = carrito.getLineaDeCompra();
+		float precioTotal = 0;
+		DAOProducto daoProductos = FactoriaIntegracion.getInstance().getDAOProducto();
+		
+		// Comprobar los producto
+	    for(TLineaDeCompra productoCantidad : productosCantidad){
+
+	        TProducto producto = daoProductos.buscarProducto(productoCantidad.getIDProducto());
+
+	        // Existe y está activo
+	        if(producto == null || !producto.getActivo()) return Eventos.RES_BUSCAR_PRODUCTO_KO;
+
+	        // Hay suficiente stock
+	        if(productoCantidad.getCantidad() > producto.getStock()) return Eventos.STOCK_INSUFICIENTE;
+
+	        // Añadir precio al precio total
+	        precioTotal += producto.getPrecio() * productoCantidad.getCantidad();
+	    }
+	    
+	    carrito.getCompra().setPrecioTotal(precioTotal);
+	    
+		return 0;
+	}
+
+	public int eliminarCompra(int id_compra) {
+		try {
+
+			Transaction transaccion;
+			transaccion = TransactionManager.getInstance().nuevaTransaccion();
+			transaccion.start();
+
+			int res = -1;
+
+			TCompra compra = daoCompra.BuscarCompra(id_compra);
+
+			if (compra != null && compra.isActivo() == true) {
+				res = daoCompra.RealizarDevolucion(id_compra);
+			}
+
+			if (res == -1)
+				transaccion.rollback();
+			else
+				transaccion.commit();
+
+			return res;
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			return -1;
+		}
+	}
+}

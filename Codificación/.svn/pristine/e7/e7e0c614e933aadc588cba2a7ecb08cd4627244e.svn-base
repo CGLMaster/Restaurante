@@ -1,0 +1,21 @@
+package Presentación.Turno;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import Negocio.Turno.TTurno;;
+
+public class Prueba {
+
+	public static void main(String[] args) {
+	
+		List<TTurno> list = new ArrayList<TTurno>();
+		TTurno ingre1 = new TTurno(1,"Mañana");
+		TTurno ingre2 = new TTurno(2,"Tarde");
+		list.add(ingre1);
+		list.add(ingre2);
+		VBuscarTodosTurno vprincipal = new VBuscarTodosTurno(list);
+
+	}
+
+}

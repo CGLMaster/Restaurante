@@ -1,0 +1,59 @@
+package Negocio.Compra;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class TCarrito {
+
+	private List<TLineaDeCompra> tLineaDeCompra;
+
+	private TCompra tCompra;
+
+	/** 
+	* <!-- begin-UML-doc -->
+	* <!-- end-UML-doc -->
+	* @generated "UML a JPA (com.ibm.xtools.transform.uml2.ejb3.java.jpa.internal.UML2JPATransform)"
+	*/
+	public void getLineasDeCompra() {
+		// begin-user-code
+		// TODO Auto-generated method stub
+
+		// end-user-code
+	}
+
+	public TCarrito(List<TLineaDeCompra> tLineaDeCompra, TCompra tCompra) {
+		super();
+		this.tLineaDeCompra = tLineaDeCompra;
+		this.tCompra = tCompra;
+	}
+
+	public TCarrito() {
+		tLineaDeCompra = new ArrayList<TLineaDeCompra>();
+		tCompra = new TCompra();
+	}
+
+	public List<TLineaDeCompra> getLineaDeCompra() {
+		return tLineaDeCompra;
+	}
+
+	public void setLineaDeCompra(List<TLineaDeCompra> tLineaDeCompra) {
+		this.tLineaDeCompra = tLineaDeCompra;
+	}
+
+	public TCompra getCompra() {
+		return tCompra;
+	}
+
+	public void setCompra(TCompra tCompra) {
+		this.tCompra = tCompra;
+	}
+
+	public void setPrecioPagado(float precioPagado) {
+		tCompra.setPrecioPagado(precioPagado);
+	}
+
+	public float getPrecioPagado() {
+		return tCompra.getPrecioPagado();
+	}
+
+}

@@ -1,0 +1,22 @@
+package Negocio.Compra;
+
+import java.util.List;
+
+public interface SACompra {
+
+	public TCarrito abrirCompra(int id_Trabajador);
+
+	public int cerrarCompra(int id_trabajador, TCarrito carrito);
+
+	public int aniadirProducto(TLineaDeCompra lineaDeCompra, TCarrito carrito);
+
+	public int eliminarProducto(int id_producto, TCarrito carrito);
+
+	public TCompraConProductos buscarPorIDCompra(int id_compra);
+
+	public List<TCompra> buscarTodosCompra();
+
+	public int devolverProducto(TLineaDeCompra prods_devolucion);
+	
+	public int eliminarCompra(int id_compra);
+}

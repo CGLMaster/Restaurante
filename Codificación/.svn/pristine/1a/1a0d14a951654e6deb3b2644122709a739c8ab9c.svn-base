@@ -1,0 +1,16 @@
+package Presentación.Ingrediente;
+
+import javax.swing.JFrame;
+import java.util.Set;
+import javax.swing.JButton;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+import javax.swing.JLabel;
+
+public class VBajaIngrediente extends JFrame {
+	
+	private Set<JButton> jButton;	
+	private Set<JPanel> jPanel;	
+	private Set<JTextField> jTextField;
+	private Set<JLabel> jLabel;
+}

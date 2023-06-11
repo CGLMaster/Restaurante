@@ -1,0 +1,53 @@
+package Negocio.Compra;
+
+import java.time.LocalDate;
+import java.util.List;
+
+public interface SACompra {
+
+	public TCarrito abrirCompra(int id_Trabajador);
+
+	/** 
+	* <!-- begin-UML-doc -->
+	* <!-- end-UML-doc -->
+	* @param id_trabajador
+	* @return
+	* @generated "UML a JPA (com.ibm.xtools.transform.uml2.ejb3.java.jpa.internal.UML2JPATransform)"
+	*/
+	public int cerrarCompra(int id_trabajador);
+
+	public int cerrarCompra(TCarrito carrito);
+
+	public int aniadirProducto(TLineaDeCompra lineaDeCompra, TCarrito carrito);
+
+	/** 
+	* <!-- begin-UML-doc -->
+	* <!-- end-UML-doc -->
+	* @param producto
+	* @return
+	* @generated "UML a JPA (com.ibm.xtools.transform.uml2.ejb3.java.jpa.internal.UML2JPATransform)"
+	*/
+	public int eliminarProducto(TLineaDeCompra producto);
+
+	public int eliminarProducto(TLineaDeCompra id_producto, TCarrito carrito);
+
+	public TCompraConProductos buscarPorIDCompra(int id_compra);
+
+	public List<TCompra> buscarTodosCompra();
+
+	/** 
+	* <!-- begin-UML-doc -->
+	* <!-- end-UML-doc -->
+	* @param prods_devolucion
+	* @return
+	* @generated "UML a JPA (com.ibm.xtools.transform.uml2.ejb3.java.jpa.internal.UML2JPATransform)"
+	*/
+	public int devolucion(TLineaDeCompra prods_devolucion);
+
+	public List<TCompra> buscarComprasPorRangoPrecioFecha(int desde, int hasta, LocalDate desdeFecha,
+			LocalDate hastaFecha);
+
+	public int devolverProductos(List<TLineaDeCompra> prods_devolucion);
+
+	public int validarCarrito(TCarrito carrito);
+}

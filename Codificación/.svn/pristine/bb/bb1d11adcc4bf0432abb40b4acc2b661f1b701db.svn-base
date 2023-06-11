@@ -1,0 +1,58 @@
+package Integración.Proveedor;
+
+import java.util.ArrayList;
+
+import Negocio.Proveedor.TProveedor;
+import Negocio.Trabajador.TTrabajador;
+import Negocio.Transaction.Transaction;
+import Negocio.Transaction.TransactionManager;
+
+public class pruebas {
+
+	public static void main(String[] args) {
+
+
+		try {
+			TransactionManager transactionManager = TransactionManager.getInstance();
+			Transaction transaccion = transactionManager.nuevaTransaccion();
+			transaccion.start();
+			
+			DAOProveedorImp dao = new DAOProveedorImp();
+			
+			
+			//ALTA PROVEEDOR
+			//dao.altaProveedor("Juan");
+			
+			//BAJA PROVEEDOR
+			//dao.eliminarProveedor(3);
+			
+			//MODIFICAR PROVEEDOR
+			/*TProveedor proveedorEditado = new TProveedor("Mario");
+			proveedorEditado.setID(4);
+			dao.modificarProveedor(proveedorEditado);*/
+			
+			//BUSCAR TODOS PROVEEDOR
+			/*ArrayList<TProveedor> proveedores = (ArrayList<TProveedor>) dao.buscarTodosProveedor();
+			for(TProveedor proveedor : proveedores){
+				System.out.println(proveedor.getNombre());
+			}*/
+			
+			//BUSCAR PROVEEDOR
+			/*TProveedor proveedor = dao.buscarProveedor(3);
+			System.out.println(proveedor.getNombre());*/
+			
+			//REACTIVAR
+			//dao.reactivar(3);
+			
+
+			
+			transaccion.commit();
+			
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+	}
+
+}

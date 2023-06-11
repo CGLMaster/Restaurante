@@ -1,0 +1,18 @@
+package Presentación.Command.MarcaCommands;
+
+import Negocio.FactoriaNegocio.FactoriaSA;
+import Negocio.Marca.TMarca;
+import Presentación.Command.Command;
+import Presentación.Command.Context;
+import Presentación.Controller.Eventos;
+
+public class ModificarMarcaCommand implements Command {
+
+	public Context executeCommand(Object datos) {
+		if (FactoriaSA.getInstance().getSAMarca().modificarMarca((TMarca) datos) != -1) {
+			return new Context(Eventos.RES_MODIFICAR_MARCA_OK, null);
+		} else {
+			return new Context(Eventos.RES_MODIFICAR_MARCA_KO, null);
+		}
+	}
+}
