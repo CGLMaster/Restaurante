@@ -1,0 +1,29 @@
+package Negocio.Producto;
+
+public class TDistribuye {
+
+	private int id_producto;
+
+	private int id_proveedor;
+	
+	public TDistribuye(int id_prod, int id_prov){
+		id_producto = id_prod;
+		id_proveedor = id_prov;
+	}
+
+	public void setIdProducto(int id_producto){
+		this.id_producto=id_producto;
+	}
+	
+	public int getIdProducto() {
+		return id_producto;
+	}
+	
+	public void setIdProveedor(int id_proveedor){
+		this.id_proveedor=id_proveedor;
+	}
+
+	public int getIdProveedor() {
+		return id_proveedor;
+	}
+}

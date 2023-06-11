@@ -1,0 +1,34 @@
+package Negocio.FactoriaNegocio;
+
+import Negocio.Marca.SAMarca;
+import Negocio.Compra.SACompra;
+import Negocio.Cliente.SACliente;
+import Negocio.Trabajador.SATrabajador;
+import Negocio.Producto.SAProducto;
+import Negocio.Proveedor.SAProveedor;
+import Negocio.Seccion.SASeccion;
+
+public abstract class FactoriaSA {
+
+
+	private static FactoriaSA instancia;
+
+	public static FactoriaSA getInstance() {
+		if(instancia == null) instancia = new FactoriaSAImp();
+		return instancia;
+	}
+
+	public abstract SAMarca getSAMarca();
+
+	public abstract SACompra getSACompra();
+
+	public abstract SACliente getSACliente();
+
+	public abstract SATrabajador getSATrabajador();
+
+	public abstract SAProducto getSAProducto();
+
+	public abstract SAProveedor getSAProveedor();
+
+	public abstract SASeccion getSASeccion();
+}
